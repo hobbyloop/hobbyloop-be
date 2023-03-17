@@ -1,1 +1,0 @@
-package com.hobbyloop.domain;public class User {}

@@ -9,4 +9,6 @@ public class TestFile {
     @Id
     @GeneratedValue
     private Long id;
+
+    private int test;
 }

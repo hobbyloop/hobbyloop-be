@@ -1,12 +1,13 @@
 package com.hobbyloop.domain.like;
 
+import com.hobbyloop.domain.BaseTime;
 import com.hobbyloop.domain.review.Review;
 import com.hobbyloop.domain.user.User;
 
 import javax.persistence.*;
 
 @Entity
-public class Like {
+public class Like extends BaseTime {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

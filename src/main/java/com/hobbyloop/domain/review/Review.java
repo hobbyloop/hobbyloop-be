@@ -1,5 +1,6 @@
 package com.hobbyloop.domain.review;
 
+import com.hobbyloop.domain.BaseTime;
 import com.hobbyloop.domain.center.Center;
 import com.hobbyloop.domain.instructor.Instructor;
 import com.hobbyloop.domain.user.User;
@@ -7,7 +8,7 @@ import com.hobbyloop.domain.user.User;
 import javax.persistence.*;
 
 @Entity
-public class Review {
+public class Review extends BaseTime {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reviewId;

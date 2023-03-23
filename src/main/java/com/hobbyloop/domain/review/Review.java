@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Entity
 public class Review {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reviewId;
 
     @ManyToOne

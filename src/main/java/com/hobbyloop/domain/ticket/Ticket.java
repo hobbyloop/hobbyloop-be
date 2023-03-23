@@ -1,11 +1,10 @@
 package com.hobbyloop.domain.ticket;
 
 import com.hobbyloop.domain.BaseTime;
+import com.hobbyloop.domain.center.Center;
+import com.hobbyloop.domain.instructor.Instructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Ticket extends BaseTime {
@@ -14,9 +13,17 @@ public class Ticket extends BaseTime {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ticketId;
 
+    @ManyToOne
+    @JoinColumn(name = "centerId")
+    private Center center;
+
+    @ManyToOne
+    @JoinColumn(name = "instructorId")
+    private Instructor instructor;
+
     private String keyword;
     private int price;
-    private int term;
+    private int days;
     private int count;
 
 

@@ -22,6 +22,9 @@ public class Lesson extends BaseTime {
     @JoinColumn(name = "instructorId")
     private Instructor instructor;
 
+    @Enumerated(EnumType.STRING)
+    private LessonStatus lessonStatus;
+
     private int lessonCapacity;
     private int lessonEmptySpace;
 

@@ -7,11 +7,11 @@ import com.hobbyloop.domain.user.User;
 import javax.persistence.*;
 
 @Entity
-public class Like extends BaseTime {
+public class ReviewLikes extends BaseTime {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long likeId;
+    private Long reviewLikesId;
 
     @ManyToOne
     @JoinColumn(name = "reviewId")

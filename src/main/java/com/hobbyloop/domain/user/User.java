@@ -19,6 +19,9 @@ public class User {
     @Enumerated(value = EnumType.STRING)
     private UserStatus userStatus;
 
+    @Enumerated(value = EnumType.STRING)
+    private UserRole userRole;
+
     private String nickname;
     private String profileImgUrl;
     private String introduction;

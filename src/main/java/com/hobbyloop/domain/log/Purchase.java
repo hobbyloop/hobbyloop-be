@@ -7,11 +7,11 @@ import com.hobbyloop.domain.user.User;
 import javax.persistence.*;
 
 @Entity
-public class PurchaseLog {
+public class Purchase {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long purchaseLogId;
+    private Long purchaseId;
 
     @ManyToOne
     @JoinColumn(name = "userId")
@@ -28,6 +28,6 @@ public class PurchaseLog {
     private int price;
 
     @Enumerated(EnumType.STRING)
-    private PurchaseLogStatus purchaseLogStatus;
+    private OrderStatus orderStatus;
 
 }

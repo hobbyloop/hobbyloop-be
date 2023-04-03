@@ -4,7 +4,7 @@ import com.hobbyloop.domain.review.Review;
 
 import javax.persistence.*;
 
-
+@Entity
 public class ReviewReport extends Report {
 
     @ManyToOne

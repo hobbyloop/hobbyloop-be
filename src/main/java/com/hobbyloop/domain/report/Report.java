@@ -7,6 +7,7 @@ import javax.persistence.*;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn
 public class Report extends BaseTime {
 
     @Id
@@ -18,6 +19,4 @@ public class Report extends BaseTime {
     private User reporter;
     private String reportMessage;
 
-    @Enumerated(EnumType.STRING)
-    private ReportCategory reportCategory;
 }

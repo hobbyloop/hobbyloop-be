@@ -5,7 +5,7 @@ import com.hobbyloop.domain.user.User;
 
 import javax.persistence.*;
 
-
+@Entity
 public class CenterReport extends Report {
 
     @ManyToOne

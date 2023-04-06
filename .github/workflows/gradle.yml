@@ -13,42 +13,51 @@ on:
   pull_request:
     branches: [ "develop" ]
 
-permissions:
-  contents: read
+env:  # 환경 변수 설정 : 변할 수 있는 변수들을 여기서 설정해두고 key를 가져가 쓰기위함
+  S3_BUCKET_NAME: hobbyloopawsbucket
+  CODE_DEPLOY_APPLICATION_NAME: code-deploy-application
+  CODE_DEPLOY_DEPLOYMENT_GROUP_NAME: deploy-group
 
-jobs:
+jobs: # jobs에 이제 실행할 동작들을 정의해준다.
   build:
-
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # 해당 jobs가 어떤 환경에서 돌아갈 것인지 설정
 
     steps:
-    - uses: actions/checkout@v3
+      - name: Checkout  # 이름을 지정하면 어떤 작업인지 보기 편하니까 name을 원하는대로 설정
+        uses: actions/checkout@v2 # uses에는 어떤 행위를 해야하는지 설정
 
-    - name: Set up JDK 11
-      uses: actions/setup-java@v3
-      with:
-        java-version: '11'
-        distribution: 'temurin'
-        
-    - name: Build with Gradle
-      uses: gradle/gradle-build-action@0d13054264b0bb894ded474f08ebb30921341cee
-      with:
-        arguments: clean build -x test
+      - name: Set up JDK 11
+        uses: actions/setup-java@v1 # 자바를 사용하기 때문에 jdk 버전 지정
+        with:
+          java-version: 11  # 자바 버전 11로
 
-    - name: Copy Secret
-      env:
-        OCCUPY_SECRET: ${{ secrets.OCCUPY_SECRET }}
-        OCCUPY_SECRET_DIR: src/main/resources
-        OCCUPY_SECRET_DIR_FILE_NAME: application-secret.yml
-      run: echo $OCCUPY_SECRET | base64 --decode > $OCCUPY_SECRET_DIR/$OCCUPY_SECRET_DIR_FILE_NAME
+      - name: Gradle execute permission for gradlew # Gradle로 빌드할 것이며, 빌드를 하기위한 gradlew에 권한을 부여
+        run: chmod +x ./gradlew
+        shell: bash # 돌아가는 환경을 bash shell로 하겠다.
 
-        ## gradle caching
-    - name: Gradle Caching
-      uses: actions/cache@v3
-      with:
-      path: |
-        ~/.gradle/caches
-        ~/.gradle/wrapper
-      key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-      restore-keys: |
-        ${{ runner.os }}-gradle-
+      - name: Build with Gradle
+        run: ./gradlew build --exclude-task test
+        shell: bash
+
+      - name: Make zip file
+        run: zip -r ./$GITHUB_SHA . # 결과된 파일을 하나의 zip 파일로 압축해서 올리자. GITHUB_SHA : 중복되지 않는 값을 출력해준다.
+        shell: bash
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1  # aws에 접속하고 aws를 사용하기위한 권한 등록
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }} # Github Action에 secret key 설정해 놓은 것들
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Upload to S3
+        run: aws s3 cp --region ap-northeast-2 ./$GITHUB_SHA.zip s3://$S3_BUCKET_NAME/$GITHUB_SHA.zip # 압축된 결과 파일을 s3 저장소에 올리기
+
+      # CodeDeploy를 사용해서 s3에 올라가있는 압축 파일을 가져다가 배포 하기
+      - name: Code Deploy
+        run: |
+          aws deploy create-deployment \
+          --deployment-config-name CodeDeployDefault.AllAtOnce \
+          --application-name ${{ env.CODE_DEPLOY_APPLICATION_NAME }} \
+          --deployment-group-name ${{ env.CODE_DEPLOY_DEPLOYMENT_GROUP_NAME }} \
+          --s3-location bucket=$S3_BUCKET_NAME,bundleType=zip,key=$GITHUB_SHA.zip

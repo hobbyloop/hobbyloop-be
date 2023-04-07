@@ -11,7 +11,7 @@ import javax.persistence.*;
 public class Report extends BaseTime {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reportId;
 
     @ManyToOne

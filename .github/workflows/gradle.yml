@@ -18,7 +18,7 @@ env:  # 환경 변수 설정 : 변할 수 있는 변수들을 여기서 설정�
   CODE_DEPLOY_APPLICATION_NAME: code-deploy-application
   CODE_DEPLOY_DEPLOYMENT_GROUP_NAME: deploy-group
 
-jobs: # jobs에 이제 실행할 동작들을 정의해준다.
+jobs:
   build:
     runs-on: ubuntu-latest  # 해당 jobs가 어떤 환경에서 돌아갈 것인지 설정
 

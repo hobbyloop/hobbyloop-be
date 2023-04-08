@@ -52,7 +52,7 @@ jobs:
 
       - name: Print Environment Variables
         run: |
-          echo "AWS_ACCESS_KEY_ID : $OCCUPY_SECRET"
+          echo $OCCUPY_SECRET
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1  # aws에 접속하고 aws를 사용하기위한 권한 등록

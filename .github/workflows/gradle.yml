@@ -36,11 +36,11 @@ jobs:
         shell: bash # 돌아가는 환경을 bash shell로 하겠다.
 
       - name: Copy Secret
-          env:
-            OCCUPY_SECRET: ${{ secrets.OCCUPY_SECRET }}
-            OCCUPY_SECRET_DIR: src/main/resources
-            OCCUPY_SECRET_DIR_FILE_NAME: application-secret.yml
-          run: echo $OCCUPY_SECRET | base64 --decode > $OCCUPY_SECRET_DIR/$OCCUPY_SECRET_DIR_FILE_NAME
+        env:
+          OCCUPY_SECRET: ${{ secrets.OCCUPY_SECRET }}
+          OCCUPY_SECRET_DIR: src/main/resources
+          OCCUPY_SECRET_DIR_FILE_NAME: application-secret.yml
+        run: echo $OCCUPY_SECRET | base64 --decode > $OCCUPY_SECRET_DIR/$OCCUPY_SECRET_DIR_FILE_NAME
 
       - name: Build with Gradle
         run: ./gradlew build --exclude-task test
@@ -50,12 +50,16 @@ jobs:
         run: zip -r ./$GITHUB_SHA . # 결과된 파일을 하나의 zip 파일로 압축해서 올리자. GITHUB_SHA : 중복되지 않는 값을 출력해준다.
         shell: bash
 
+      - name: Print File
+        run: |
+          cat src/main/resources/application.yml
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1  # aws에 접속하고 aws를 사용하기위한 권한 등록
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }} # Github Action에 secret key 설정해 놓은 것들
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
+          aws-region: "ap-northeast-2"
 
       - name: Upload to S3
         run: aws s3 cp --region ap-northeast-2 ./$GITHUB_SHA.zip s3://$S3_BUCKET_NAME/$GITHUB_SHA.zip # 압축된 결과 파일을 s3 저장소에 올리기

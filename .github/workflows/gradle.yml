@@ -52,7 +52,7 @@ jobs:
 
       - name: Print File
         run: |
-          cat src/main/resources/application-secret.yml
+          cat src/main/resources/application.yml
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1  # aws에 접속하고 aws를 사용하기위한 권한 등록

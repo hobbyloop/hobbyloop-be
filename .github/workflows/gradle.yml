@@ -46,24 +46,13 @@ jobs:
         run: ./gradlew build --exclude-task test
         shell: bash
 
-      - name: Deploy to production
-        if: github.ref == 'refs/heads/main'
-        env:
-          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
-        run: |
-          npm run build
-          npm run deploy
-
-
-
       - name: Make zip file
         run: zip -r ./$GITHUB_SHA . # 결과된 파일을 하나의 zip 파일로 압축해서 올리자. GITHUB_SHA : 중복되지 않는 값을 출력해준다.
         shell: bash
 
       - name: Print Environment Variables
         run: |
-          echo "AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID"
-          echo "AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY"
+          echo "AWS_ACCESS_KEY_ID : $OCCUPY_SECRET"
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1  # aws에 접속하고 aws를 사용하기위한 권한 등록

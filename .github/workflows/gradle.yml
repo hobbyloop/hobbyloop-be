@@ -50,9 +50,9 @@ jobs:
         run: zip -r ./$GITHUB_SHA . # 결과된 파일을 하나의 zip 파일로 압축해서 올리자. GITHUB_SHA : 중복되지 않는 값을 출력해준다.
         shell: bash
 
-      - name: Print Environment Variables
+      - name: Print File
         run: |
-          echo ${{ secrets.OCCUPY_SECRET }}
+          cat src/main/resources/application-secret.yml
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1  # aws에 접속하고 aws를 사용하기위한 권한 등록

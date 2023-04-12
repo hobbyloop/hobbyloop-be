@@ -1,1 +1,5 @@
 rootProject.name = 'hobbyloop'
+
+include 'hobbyloop-api'
+include 'hobbyloop-domain'
+include 'hobbyloop-admin'

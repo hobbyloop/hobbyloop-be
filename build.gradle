@@ -4,9 +4,16 @@ plugins {
 	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
 }
 
-group = 'com'
-version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
+
+allprojects {
+	group = 'com'
+	version = '0.0.1-SNAPSHOT'
+
+	repositories {
+		mavenCentral()
+	}
+}
 
 configurations {
 	compileOnly {
@@ -14,22 +21,32 @@ configurations {
 	}
 }
 
-repositories {
-	mavenCentral()
+subprojects {
+	apply {
+		plugin("java")
+		plugin("io.spring.dependency-management")
+		plugin("org.springframework.boot")
+	}
+
+	dependencies {
+		//Spring
+		implementation 'org.springframework.boot:spring-boot-starter-web'
+		testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+		//lombok
+		compileOnly 'org.projectlombok:lombok'
+		annotationProcessor 'org.projectlombok:lombok'
+
+		//Swagger
+		implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
+		implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
+
+	}
+
 }
 
-dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	compileOnly 'org.projectlombok:lombok'
-	runtimeOnly 'com.mysql:mysql-connector-j'
-	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+bootJar.enabled(false)
 
-	//Swagger
-	implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
-	implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
-}
 
 tasks.named('test') {
 	useJUnitPlatform()

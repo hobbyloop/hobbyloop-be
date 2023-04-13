@@ -1,0 +1,12 @@
+dependencies {
+    implementation project(":hobbyloop-domain")
+
+    //Swagger
+    implementation "io.springfox:springfox-swagger-ui:${swaggerVersion}"
+    implementation "io.springfox:springfox-swagger2:${swaggerVersion}"
+
+}
+
+test {
+    useJUnitPlatform()
+}

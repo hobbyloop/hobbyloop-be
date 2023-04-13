@@ -2,6 +2,12 @@ server:
   port: 8081
 
 spring:
+  config:
+    import: application-secret.yml
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher

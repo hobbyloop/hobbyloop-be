@@ -7,7 +7,7 @@ plugins {
 sourceCompatibility = '11'
 
 allprojects {
-	group = 'com'
+	group = 'hobbyloop'
 	version = '0.0.1-SNAPSHOT'
 
 	repositories {
@@ -37,9 +37,8 @@ subprojects {
 		compileOnly 'org.projectlombok:lombok'
 		annotationProcessor 'org.projectlombok:lombok'
 
-		//Swagger
-		implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
-		implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
+		testImplementation "org.junit.jupiter:junit-jupiter-api:${jupiterVersion}"
+		testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${jupiterVersion}"
 
 	}
 

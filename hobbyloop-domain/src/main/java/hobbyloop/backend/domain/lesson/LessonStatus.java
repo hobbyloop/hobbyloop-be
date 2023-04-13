@@ -1,7 +1,7 @@
 package hobbyloop.backend.domain.lesson;
 
 public enum LessonStatus {
-     AVAILABLE,
-     OUTDATED,
-     FULL
+    AVAILABLE,
+    OUTDATED,
+    FULL
 }

@@ -11,8 +11,8 @@ public class TestController {
     public String test() {
         User user = new User();
         user.setUserId(1L);
-        user.setSocialEmail("whdgh9873@naver.com");
-        return "userId = " + user.getUserId() + "socialEmail = " + user.getSocialEmail();
+        user.setIntroduction("deploy test");
+        return "userId = " + user.getUserId() + "socialEmail = " + user.getIntroduction();
     }
 
 }

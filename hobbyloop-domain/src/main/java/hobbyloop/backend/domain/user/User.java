@@ -32,6 +32,8 @@ public class User {
     private String introduction;
     private int point;
     private String account;
-    private LocalDate agreement;
+
+    private LocalDate infoAgreement;
+    private LocalDate locationAgreement;
 
 }

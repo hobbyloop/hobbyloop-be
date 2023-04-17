@@ -1,6 +1,8 @@
 package hobbyloop.backend.api.controller;
 
+import hobbyloop.backend.api.ApiResponse;
 import hobbyloop.backend.domain.user.User;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -8,11 +10,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestController {
 
     @GetMapping("/")
-    public String test() {
+    public ApiResponse<String> test() {
         User user = new User();
         user.setUserId(1L);
         user.setIntroduction("deploy test");
-        return "userId = " + user.getUserId() + "socialEmail = " + user.getIntroduction();
+        return ApiResponse.success(HttpStatus.OK);
     }
 
 }

@@ -5,6 +5,16 @@ dependencies {
     implementation "io.springfox:springfox-swagger-ui:${swaggerVersion}"
     implementation "io.springfox:springfox-swagger2:${swaggerVersion}"
 
+    //소셜 로그인 관련 oauth2, spring security
+    implementation "org.springframework.boot:spring-boot-starter-security"
+    implementation "org.springframework.security:spring-security-test"
+
+    //spring security oauth2 cleint
+    implementation "org.springframework.boot:spring-boot-starter-oauth2-client"
+
+    //JWT
+    implementation 'com.auth0:java-jwt:4.2.1'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 }
 
 test {

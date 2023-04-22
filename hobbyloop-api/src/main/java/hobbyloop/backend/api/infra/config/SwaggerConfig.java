@@ -1,4 +1,4 @@
-package hobbyloop.backend.api.config;
+package hobbyloop.backend.api.infra.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

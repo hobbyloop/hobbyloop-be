@@ -1,4 +1,4 @@
-package hobbyloop.backend.api.user.applicationservice.user;
+package hobbyloop.backend.api.applicationservice.user;
 
 import hobbyloop.backend.domain.user.SocialType;
 import hobbyloop.backend.domain.user.User;

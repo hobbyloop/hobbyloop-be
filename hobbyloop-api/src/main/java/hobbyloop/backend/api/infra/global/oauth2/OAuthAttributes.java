@@ -3,7 +3,6 @@ package hobbyloop.backend.api.infra.global.oauth2;
 import hobbyloop.backend.api.infra.global.jwt.util.PasswordUtil;
 import hobbyloop.backend.api.infra.global.oauth2.userinfo.GoogleOAuth2UserInfo;
 import hobbyloop.backend.api.infra.global.oauth2.userinfo.KakaoOAuth2UserInfo;
-import hobbyloop.backend.api.infra.global.oauth2.userinfo.NaverOAuth2UserInfo;
 import hobbyloop.backend.api.infra.global.oauth2.userinfo.OAuth2UserInfo;
 import hobbyloop.backend.domain.user.Role;
 import hobbyloop.backend.domain.user.SocialType;
@@ -39,9 +38,6 @@ public class OAuthAttributes {
     public static OAuthAttributes of(SocialType socialType,
                                      String userNameAttributeName, Map<String, Object> attributes) {
 
-        if (socialType == SocialType.NAVER) {
-            return ofNaver(userNameAttributeName, attributes);
-        }
         if (socialType == SocialType.KAKAO) {
             return ofKakao(userNameAttributeName, attributes);
         }
@@ -62,13 +58,6 @@ public class OAuthAttributes {
                 .build();
     }
 
-    public static OAuthAttributes ofNaver(String userNameAttributeName, Map<String, Object> attributes) {
-        return OAuthAttributes.builder()
-                .nameAttributeKey(userNameAttributeName)
-                .oauth2UserInfo(new NaverOAuth2UserInfo(attributes))
-                .build();
-    }
-
     /**
      * of메소드로 OAuthAttributes 객체가 생성되어, 유저 정보들이 담긴 OAuth2UserInfo가 소셜 타입별로 주입된 상태
      * OAuth2UserInfo에서 socialId(식별값), nickname, imageUrl을 가져와서 build
@@ -76,9 +65,11 @@ public class OAuthAttributes {
      * role은 GUEST로 설정
      */
     public User toEntity(SocialType socialType, OAuth2UserInfo oauth2UserInfo) {
+        System.out.println(oauth2UserInfo.getSocialEmail());
         return User.builder()
                 .socialType(socialType)
                 .socialId(oauth2UserInfo.getId())
+                .socialEmail(oauth2UserInfo.getSocialEmail())
                 .email(UUID.randomUUID() + "@socialUser.com")
                 .password(PasswordUtil.generateRandomPassword())
                 .role(Role.GUEST)

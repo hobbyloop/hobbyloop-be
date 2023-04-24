@@ -22,7 +22,10 @@ public class User extends BaseTime {
     @Enumerated(value = EnumType.STRING)
     private SocialType socialType;
     private String email;
+
     private String password;
+
+    private String socialEmail;
 
     @Column(columnDefinition="TEXT")
     private String accessToken;

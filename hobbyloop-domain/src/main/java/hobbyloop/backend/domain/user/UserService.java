@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.Optional;
 
 @Service
@@ -27,5 +28,16 @@ public class UserService {
 
     public Optional<User> getUserBySocialTypeAndSocialId(SocialType socialType, String id) {
         return userRepository.findBySocialTypeAndSocialId(socialType, id);
+    }
+
+    public User getUserById(Long userId) {
+        return userRepository.findById(userId).orElseThrow(EntityNotFoundException::new);
+    }
+
+    public void updateUserRole(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(EntityNotFoundException::new);
+        user.updateUserRole(Role.USER);
+        userRepository.save(user);
+
     }
 }

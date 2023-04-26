@@ -49,4 +49,8 @@ public class User extends BaseTime {
     public void updateAccessToken(String accessToken) {
         this.accessToken = accessToken;
     }
+
+    public void updateUserRole(Role role) {
+        this.role = role;
+    }
 }

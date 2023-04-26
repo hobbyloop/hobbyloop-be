@@ -1,8 +1,7 @@
 package hobbyloop.backend.domain.user;
 
-public enum AuthProvider {
+public enum SocialType {
     GOOGLE,
     APPLE,
-    NAVER,
     KAKAO
 }

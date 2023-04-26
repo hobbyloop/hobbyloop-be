@@ -1,4 +1,4 @@
-package hobbyloop.backend.api;
+package hobbyloop.backend.api.infra.util;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AccessLevel;

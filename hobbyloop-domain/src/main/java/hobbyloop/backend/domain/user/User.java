@@ -1,39 +1,52 @@
 package hobbyloop.backend.domain.user;
 
-import lombok.Getter;
-import lombok.Setter;
+import hobbyloop.backend.domain.BaseTime;
+import lombok.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Entity
-@Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class User {
+@Builder
+@AllArgsConstructor
+public class User extends BaseTime {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
 
+    @Enumerated(value = EnumType.STRING)
+    private SocialType socialType;
+    private String email;
+
     private String password;
 
-    @Enumerated(value = EnumType.STRING)
-    private AuthProvider authProvider;
     private String socialEmail;
 
-    @Enumerated(value = EnumType.STRING)
-    private UserStatus userStatus;
+    @Column(columnDefinition="TEXT")
+    private String accessToken;
+    @Column(columnDefinition="TEXT")
+    private String refreshToken;
+    private String socialId;
+
 
     @Enumerated(value = EnumType.STRING)
-    private UserRole userRole;
+    private Role role;
 
-    private String nickname;
-    private String profileImgUrl;
-    private String introduction;
-    private int point;
-    private String account;
+    // 비밀번호 암호화 메소드
+    public void passwordEncode(PasswordEncoder passwordEncoder) {
+        this.password = passwordEncoder.encode(this.password);
+    }
 
-    private LocalDate infoAgreement;
-    private LocalDate locationAgreement;
+    public void updateRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
+    }
 
+    public void updateAccessToken(String accessToken) {
+        this.accessToken = accessToken;
+    }
 }

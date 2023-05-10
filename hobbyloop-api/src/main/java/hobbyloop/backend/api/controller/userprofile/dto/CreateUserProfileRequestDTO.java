@@ -4,6 +4,7 @@ import hobbyloop.backend.domain.user.User;
 import hobbyloop.backend.domain.user.UserStatus;
 import hobbyloop.backend.domain.userProfile.Gender;
 import hobbyloop.backend.domain.userProfile.UserProfile;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,24 +15,33 @@ import java.time.LocalDate;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class CreateUserProfileRequestDTO {
 
+    @ApiModelProperty(value = "유저 식별자", example = "1")
     private Long userId;
-    private UserStatus userStatus;
+
+    @ApiModelProperty(value = "유저의 이름", example = "임종호")
     private String name;
+
+    @ApiModelProperty(value = "유저의 별명", example = "jongho")
     private String nickname;
+
+    @ApiModelProperty(value = "성별", example = "남자")
     private String gender;
 
-    private int point;
-    private String account;
+    @ApiModelProperty(value = "개인정보 활용 동의 날짜", example = "2023-05-10")
     private LocalDate infoAgreement;
+
+    @ApiModelProperty(value = "위치정보 활용 동의 날짜", example = "2023-05-10")
     private LocalDate locationAgreement;
 
     public static UserProfile toUserProfile(CreateUserProfileRequestDTO createUserProfileRequestDTO, User user) {
         return UserProfile.builder()
                 .user(user)
-                .userStatus(createUserProfileRequestDTO.userStatus)
+                .userStatus(UserStatus.ACTIVE)
                 .name(createUserProfileRequestDTO.name)
                 .nickname(createUserProfileRequestDTO.nickname)
                 .gender(Gender.of(createUserProfileRequestDTO.gender))
+                .infoAgreement(createUserProfileRequestDTO.infoAgreement)
+                .locationAgreement(createUserProfileRequestDTO.locationAgreement)
                 .build();
     }
 

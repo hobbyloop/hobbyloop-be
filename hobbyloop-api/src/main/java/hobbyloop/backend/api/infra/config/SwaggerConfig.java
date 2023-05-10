@@ -11,14 +11,14 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Configuration
-@EnableSwagger2
 public class SwaggerConfig {
     @Bean
     public Docket restAPI() {
-        return new Docket(DocumentationType.SWAGGER_2)
+        return new Docket(DocumentationType.OAS_30)
+                .useDefaultResponseMessages(true)
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.hobbyloop"))
+                .apis(RequestHandlerSelectors.basePackage("hobbyloop.backend.api"))
                 .paths(PathSelectors.any())
                 .build();
     }

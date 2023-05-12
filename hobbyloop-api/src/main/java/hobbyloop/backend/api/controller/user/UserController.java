@@ -5,6 +5,7 @@ import hobbyloop.backend.api.controller.user.dto.LoginResponseDTO;
 import hobbyloop.backend.api.infra.global.jwt.service.JwtService;
 import hobbyloop.backend.api.infra.util.ApiResponse;
 import hobbyloop.backend.domain.user.User;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +21,7 @@ public class UserController {
     private final UserApplicationService userApplicationService;
     private final JwtService jwtService;
 
+    @ApiOperation(value = "소셜 로그인이 완료되면 redirect 되는 요청")
     @GetMapping("")
     public ApiResponse<LoginResponseDTO> loginSuccessRequest(@RequestParam String authorization) throws Exception {
 

@@ -1,12 +1,18 @@
-package hobbyloop.backend.domain.user;
+package hobbyloop.backend.domain.userProfile;
 
 import hobbyloop.backend.domain.user.User;
 import hobbyloop.backend.domain.user.UserStatus;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserProfile {
 
     @Id
@@ -21,8 +27,13 @@ public class UserProfile {
 
     private String name;
     private String nickname;
-    private String profileImgUrl;
-    private String introduction;
+
+    @Enumerated(value = EnumType.STRING)
+    private Gender gender;
+
+    private LocalDate birth;
+    private String phoneNum;
+
     private int point;
     private String account;
     private LocalDate infoAgreement;

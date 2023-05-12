@@ -25,6 +25,11 @@ public class SecurityConfig {
     private final OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
     private final OAuth2LoginFailureHandler oAuth2LoginFailureHandler;
     private final CustomOAuth2UserService customOAuth2UserService;
+    private final String[] SWAGGER = {
+            "/v3/api-docs",
+            "/swagger-resources/**", "/configuration/security", "/webjars/**",
+            "/swagger-ui.html", "/swagger/**", "/swagger-ui/**"
+    };
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -42,6 +47,7 @@ public class SecurityConfig {
                 .authorizeRequests()
 
                 .antMatchers("/", "/css/**", "/images/**", "/js/**", "/favicon.ico", "/h2-console/**").permitAll()
+                .antMatchers(SWAGGER).permitAll()
                 .anyRequest().authenticated()
                 .and()
 

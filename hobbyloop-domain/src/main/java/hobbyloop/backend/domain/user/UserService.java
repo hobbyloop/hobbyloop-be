@@ -8,7 +8,7 @@ import javax.persistence.EntityNotFoundException;
 import java.util.Optional;
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class UserService {
 
@@ -22,10 +22,6 @@ public class UserService {
         return userRepository.findByRefreshToken(refreshToken);
     }
 
-    public User createUser(User user) {
-        return userRepository.save(user);
-    }
-
     public Optional<User> getUserBySocialTypeAndSocialId(SocialType socialType, String id) {
         return userRepository.findBySocialTypeAndSocialId(socialType, id);
     }
@@ -34,6 +30,12 @@ public class UserService {
         return userRepository.findById(userId).orElseThrow(EntityNotFoundException::new);
     }
 
+    @Transactional
+    public User createUser(User user) {
+        return userRepository.save(user);
+    }
+
+    @Transactional
     public void updateUserRole(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(EntityNotFoundException::new);
         user.updateUserRole(Role.USER);

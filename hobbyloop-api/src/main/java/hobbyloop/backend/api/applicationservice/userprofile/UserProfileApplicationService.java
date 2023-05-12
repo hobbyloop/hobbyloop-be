@@ -1,4 +1,4 @@
-package hobbyloop.backend.api.controller.userprofile;
+package hobbyloop.backend.api.applicationservice.userprofile;
 
 import hobbyloop.backend.api.controller.userprofile.dto.CreateUserProfileRequestDTO;
 import hobbyloop.backend.domain.user.UserService;

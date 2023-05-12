@@ -1,5 +1,6 @@
 package hobbyloop.backend.api.controller.userprofile;
 
+import hobbyloop.backend.api.applicationservice.userprofile.UserProfileApplicationService;
 import hobbyloop.backend.api.controller.userprofile.dto.CreateUserProfileRequestDTO;
 import hobbyloop.backend.api.infra.util.ApiResponse;
 import io.swagger.annotations.ApiOperation;
@@ -20,6 +21,6 @@ public class UserProfileController {
             @RequestBody CreateUserProfileRequestDTO request) {
 
         userProfileApplicationService.createUserProfile(request);
-        return ApiResponse.success(HttpStatus.OK);
+        return ApiResponse.success(HttpStatus.CREATED);
     }
 }

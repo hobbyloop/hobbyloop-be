@@ -31,6 +31,9 @@ public class UserProfile {
     @Enumerated(value = EnumType.STRING)
     private Gender gender;
 
+    private LocalDate birth;
+    private String phoneNum;
+
     private int point;
     private String account;
     private LocalDate infoAgreement;

@@ -33,4 +33,7 @@ public class UserApplicationService {
         return userService.getUserBySocialTypeAndSocialId(socialType, id);
     }
 
+    public Optional<User> findByAccessToken(String accessToken) {
+        return userService.getUserByAccessToken(accessToken);
+    }
 }

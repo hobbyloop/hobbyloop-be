@@ -46,7 +46,7 @@ public class SecurityConfig {
 
                 .authorizeRequests()
 
-                .antMatchers("/", "/css/**", "/images/**", "/js/**", "/favicon.ico", "/h2-console/**").permitAll()
+                .antMatchers("/", "/css/**", "/images/**", "/js/**", "/favicon.ico", "/h2-console/**","/api/v1/user").permitAll()
                 .antMatchers(SWAGGER).permitAll()
                 .anyRequest().authenticated()
                 .and()

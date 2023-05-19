@@ -42,4 +42,8 @@ public class UserService {
         userRepository.save(user);
 
     }
+
+    public Optional<User> getUserByAccessToken(String accessToken) {
+        return userRepository.findByAccessToken(accessToken);
+    }
 }

@@ -1,7 +1,7 @@
 package hobbyloop.backend.domain.comment;
 
 import hobbyloop.backend.domain.BaseTime;
-import hobbyloop.backend.domain.review.Review;
+import hobbyloop.backend.domain.review.CenterReview;
 import hobbyloop.backend.domain.user.User;
 
 import javax.persistence.*;
@@ -14,7 +14,7 @@ public class Comment extends BaseTime {
 
     @ManyToOne
     @JoinColumn(name = "reviewId")
-    private Review review;
+    private CenterReview centerReview;
 
     @ManyToOne
     @JoinColumn(name = "userId")

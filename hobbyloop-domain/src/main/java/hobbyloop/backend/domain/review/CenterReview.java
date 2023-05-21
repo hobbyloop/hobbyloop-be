@@ -8,22 +8,18 @@ import hobbyloop.backend.domain.user.User;
 import javax.persistence.*;
 
 @Entity
-public class Review extends BaseTime {
+public class CenterReview extends BaseTime {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long reviewId;
+    private Long centerReviewId;
 
     @ManyToOne
     @JoinColumn(name = "centerId")
     private Center center;
 
     @ManyToOne
-    @JoinColumn(name = "instructorId")
-    private Instructor instructor;
-
-    @ManyToOne
     @JoinColumn(name = "userId")
-    private User user;
+    private User writer;
 
     @Enumerated(value = EnumType.STRING)
     private ReviewStatus reviewStatus;

@@ -3,10 +3,12 @@ package hobbyloop.backend.domain.ticket;
 import hobbyloop.backend.domain.BaseTime;
 import hobbyloop.backend.domain.center.Center;
 import hobbyloop.backend.domain.instructor.Instructor;
+import lombok.Getter;
 
 import javax.persistence.*;
 
 @Entity
+@Getter
 public class Ticket extends BaseTime {
 
     @Id
@@ -17,14 +19,13 @@ public class Ticket extends BaseTime {
     @JoinColumn(name = "centerId")
     private Center center;
 
-    @ManyToOne
-    @JoinColumn(name = "instructorId")
-    private Instructor instructor;
+    @Enumerated(value = EnumType.STRING)
+    private TicketType ticketType;
 
     private String keyword;
     private int price;
     private int days;
-    private int count;
-
+    private int salesAmount;
+    private double score;
 
 }

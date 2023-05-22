@@ -1,12 +1,15 @@
 package hobbyloop.backend.domain.ticket;
 
 import hobbyloop.backend.domain.BaseTime;
+import hobbyloop.backend.domain.center.Center;
 import hobbyloop.backend.domain.user.User;
+import lombok.Getter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
+@Getter
 public class UserTicket extends BaseTime {
 
     @Id
@@ -16,6 +19,10 @@ public class UserTicket extends BaseTime {
     @ManyToOne
     @JoinColumn(name = "ticketId")
     private Ticket ticket;
+
+    @ManyToOne
+    @JoinColumn(name = "centerId")
+    private Center center;
 
     @ManyToOne
     @JoinColumn(name = "userId")

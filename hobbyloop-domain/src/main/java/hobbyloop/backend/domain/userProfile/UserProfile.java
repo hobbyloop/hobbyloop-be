@@ -4,6 +4,7 @@ import hobbyloop.backend.domain.user.User;
 import hobbyloop.backend.domain.user.UserStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -13,6 +14,7 @@ import java.time.LocalDate;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
 public class UserProfile {
 
     @Id
@@ -34,7 +36,8 @@ public class UserProfile {
     private LocalDate birth;
     private String phoneNum;
 
-    private int point;
+    private int chargedPoint;
+    private int givenPoint;
     private String account;
     private LocalDate infoAgreement;
     private LocalDate locationAgreement;

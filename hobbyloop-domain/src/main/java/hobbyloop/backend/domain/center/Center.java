@@ -1,6 +1,7 @@
 package hobbyloop.backend.domain.center;
 
 import hobbyloop.backend.domain.BaseTime;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -8,6 +9,7 @@ import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @Entity
+@Getter
 public class Center extends BaseTime {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,6 +1,7 @@
 package hobbyloop.backend.domain.ticket;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,26 +12,22 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TicketService {
 
-    private static final String SORT_TYPE_RECENT = "recently";
-    private static final String SORT_TYPE_SALES_AMOUNT = "amount";
-    private static final String SORT_TYPE_SCORE = "score";
-
     private final TicketRepository ticketRepository;
 
-    public List<Ticket> getTicketsWithRanking(String ticketType, String sortType) {
-        return navigate(ticketType, sortType);
+    public List<Ticket> getTicketsWithRanking(String ticketType, String sortType, Pageable pageable) {
+        return navigate(ticketType, sortType, pageable);
     }
 
-    private List<Ticket> navigate(String ticketType, String sortType) {
+    private List<Ticket> navigate(String ticketType, String sortType, Pageable pageable) {
         TicketType type = TicketType.of(ticketType);
+        TicketSortType ticketSortType = TicketSortType.of(sortType);
 
-        if (sortType.equals(SORT_TYPE_SCORE)) {
-            return ticketRepository.findTop50ByTicketTypeOrderByScoreDesc(type);
+        if (ticketSortType.equals(TicketSortType.SCORE)) {
+            return ticketRepository.findAllByTicketTypeOrderByScoreDesc(type, pageable);
         }
-        if (sortType.equals(SORT_TYPE_SALES_AMOUNT)) {
-            return ticketRepository.findTop50ByTicketTypeOrderBySalesAmountDesc(type);
+        if (ticketSortType.equals(TicketSortType.AMOUNT)) {
+            return ticketRepository.findAllByTicketTypeOrderBySalesAmountDesc(type, pageable);
         }
-        return ticketRepository.findTop50ByTicketTypeOrderByCreatedTimeDesc(type);
-
+        return ticketRepository.findAllByTicketTypeOrderByCreatedTimeDesc(type, pageable);
     }
 }

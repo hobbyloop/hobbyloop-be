@@ -22,6 +22,4 @@ public enum TicketType {
                 .filter(ticket -> ticket.getName().equals(ticketType))
                 .findAny().orElseThrow(NoSuchFieldError::new);
     }
-
-
 }

@@ -32,5 +32,5 @@ public class Center extends BaseTime {
 
     private String facilityIntroduction;
 
-    private String counselingAvailableTimeStart;
+    private String counselingAvailableTime;
 }

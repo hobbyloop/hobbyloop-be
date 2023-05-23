@@ -1,7 +1,7 @@
 package hobbyloop.backend.api.applicationservice.userprofile;
 
 import hobbyloop.backend.api.controller.userprofile.dto.CreateUserProfileRequestDTO;
-import hobbyloop.backend.api.controller.userprofile.dto.GetUserProfileRespondDTO;
+import hobbyloop.backend.api.controller.userprofile.dto.UserProfileResponseDTO;
 import hobbyloop.backend.domain.reservation.Reservation;
 import hobbyloop.backend.domain.reservation.ReservationService;
 import hobbyloop.backend.domain.ticket.UserTicket;
@@ -31,15 +31,15 @@ public class UserProfileApplicationService {
         userService.updateUserRole(request.getUserId());
     }
 
-    public GetUserProfileRespondDTO getUserProfile(Long userId) {
+    public UserProfileResponseDTO getUserProfile(Long userId) {
         User user = userService.getUserById(userId);
         UserProfile userProfile = userProfileService.findUserProfileByUser(user);
         Optional<Reservation> reservation = reservationService.findEarliestReservationByUser(user);
         List<UserTicket> userTickets = userTicketService.findAllUserTicketsByUser(user);
 
         if (reservation.isEmpty()) {
-            return GetUserProfileRespondDTO.from(userTickets, userProfile);
+            return UserProfileResponseDTO.from(userTickets, userProfile);
         }
-        return GetUserProfileRespondDTO.from(reservation.get(), userTickets, userProfile);
+        return UserProfileResponseDTO.from(reservation.get(), userTickets, userProfile);
     }
 }

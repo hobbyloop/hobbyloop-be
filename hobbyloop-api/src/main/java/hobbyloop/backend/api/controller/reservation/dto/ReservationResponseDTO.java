@@ -9,14 +9,14 @@ import java.time.LocalDate;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
-public class GetReservationRespondDTO {
+public class ReservationResponseDTO {
     private String centerName;
     private LocalDate lessonDay;
     private int lessonCapacity;
     private int lessonEmptySpace;
 
-    public static GetReservationRespondDTO from(Reservation reservation) {
-        return GetReservationRespondDTO.builder()
+    public static ReservationResponseDTO from(Reservation reservation) {
+        return ReservationResponseDTO.builder()
                 .centerName(reservation.getLesson().getCenter().getName())
                 .lessonDay(reservation.getLesson().getLessonDate().toLocalDate())
                 .lessonCapacity(reservation.getLesson().getLessonCapacity())

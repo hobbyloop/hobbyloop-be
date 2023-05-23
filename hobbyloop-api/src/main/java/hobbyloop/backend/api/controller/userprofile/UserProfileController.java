@@ -2,7 +2,7 @@ package hobbyloop.backend.api.controller.userprofile;
 
 import hobbyloop.backend.api.applicationservice.userprofile.UserProfileApplicationService;
 import hobbyloop.backend.api.controller.userprofile.dto.CreateUserProfileRequestDTO;
-import hobbyloop.backend.api.controller.userprofile.dto.GetUserProfileRespondDTO;
+import hobbyloop.backend.api.controller.userprofile.dto.UserProfileResponseDTO;
 import hobbyloop.backend.api.infra.util.ApiResponse;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +26,7 @@ public class UserProfileController {
     }
 
     @GetMapping("/{userId}")
-    public ApiResponse<GetUserProfileRespondDTO> getUserProfile(@PathVariable Long userId) {
+    public ApiResponse<UserProfileResponseDTO> getUserProfile(@PathVariable Long userId) {
         return ApiResponse.success(HttpStatus.OK, userProfileApplicationService.getUserProfile(userId));
     }
 }

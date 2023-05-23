@@ -2,17 +2,14 @@ package hobbyloop.backend.domain.userProfile;
 
 import hobbyloop.backend.domain.user.User;
 import hobbyloop.backend.domain.user.UserStatus;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
 @Builder
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Getter
 public class UserProfile {

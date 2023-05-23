@@ -11,22 +11,22 @@ import java.util.stream.Collectors;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class GetUserTicketInfo {
+public class UserTicketInfoDTO {
     private String centerName;
     private int remainingCounts;
     private LocalDate endDate;
 
-    public static GetUserTicketInfo from(UserTicket userTicket) {
-        return GetUserTicketInfo.builder()
+    public static UserTicketInfoDTO from(UserTicket userTicket) {
+        return UserTicketInfoDTO.builder()
                 .centerName(userTicket.getCenter().getName())
                 .remainingCounts(userTicket.getRemainingCounts())
                 .endDate(userTicket.getEndDate())
                 .build();
     }
 
-    public static List<GetUserTicketInfo> from(List<UserTicket> userTickets) {
+    public static List<UserTicketInfoDTO> from(List<UserTicket> userTickets) {
         return userTickets.stream()
-                .map(GetUserTicketInfo::from)
+                .map(UserTicketInfoDTO::from)
                 .collect(Collectors.toList());
     }
 }

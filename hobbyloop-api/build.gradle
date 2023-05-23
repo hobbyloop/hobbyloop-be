@@ -1,22 +1,25 @@
 dependencies {
     implementation project(":hobbyloop-domain")
 
-    //Swagger
+    // Swagger
     implementation "io.springfox:springfox-swagger-ui:${swaggerVersion}"
     implementation "io.springfox:springfox-boot-starter:${swaggerVersion}"
 
-    //소셜 로그인 관련 oauth2, spring security
+    // 소셜 로그인 관련 oauth2, spring security
     implementation "org.springframework.boot:spring-boot-starter-security"
     implementation "org.springframework.security:spring-security-test"
 
-    //spring security oauth2 cleint
+    // spring security oauth2 cleint
     implementation "org.springframework.boot:spring-boot-starter-oauth2-client"
 
-    //JWT
+    // JWT
     implementation "com.auth0:java-jwt:${jwtVersion}"
     implementation "org.springframework.boot:spring-boot-starter-data-jpa"
 
-    //랜덤 비밀번호 생성
+    // logging
+    implementation "ca.pjer:logback-awslogs-appender:${awsLogAppenderVersion}"
+
+    // etc
     implementation "org.apache.commons:commons-lang3:${apacheLangVersion}"
 }
 

@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class UserProfileResponseDTO {
     private ReservationResponseDTO reservationInfo;
-    private List<UserTicketInfoDTO> userTicketInfoDTOS;
+    private List<UserTicketInfoDTO> userTicketInfoList;
     private int chargedPoint;
     private int givenPoint;
 
@@ -25,7 +25,7 @@ public class UserProfileResponseDTO {
     ) {
         return UserProfileResponseDTO.builder()
                 .reservationInfo(ReservationResponseDTO.from(reservation))
-                .userTicketInfoDTOS(UserTicketInfoDTO.from(userTickets))
+                .userTicketInfoList(UserTicketInfoDTO.from(userTickets))
                 .chargedPoint(userProfile.getChargedPoint())
                 .givenPoint(userProfile.getGivenPoint())
                 .build();
@@ -36,10 +36,9 @@ public class UserProfileResponseDTO {
             UserProfile userProfile
     ) {
         return UserProfileResponseDTO.builder()
-                .userTicketInfoDTOS(UserTicketInfoDTO.from(userTickets))
+                .userTicketInfoList(UserTicketInfoDTO.from(userTickets))
                 .chargedPoint(userProfile.getChargedPoint())
                 .givenPoint(userProfile.getGivenPoint())
                 .build();
     }
-
 }

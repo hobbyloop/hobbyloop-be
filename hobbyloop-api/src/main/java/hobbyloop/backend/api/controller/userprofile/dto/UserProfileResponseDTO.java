@@ -4,6 +4,7 @@ import hobbyloop.backend.api.controller.reservation.dto.ReservationResponseDTO;
 import hobbyloop.backend.domain.reservation.Reservation;
 import hobbyloop.backend.domain.ticket.UserTicket;
 import hobbyloop.backend.domain.userProfile.UserProfile;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 import java.util.List;
@@ -15,7 +16,11 @@ import java.util.List;
 public class UserProfileResponseDTO {
     private ReservationResponseDTO reservationInfo;
     private List<UserTicketInfoDTO> userTicketInfoList;
+
+    @ApiModelProperty(name = "충전 포인트", example = "50000")
     private int chargedPoint;
+
+    @ApiModelProperty(name = "지급 포인트", example = "50")
     private int givenPoint;
 
     public static UserProfileResponseDTO from(

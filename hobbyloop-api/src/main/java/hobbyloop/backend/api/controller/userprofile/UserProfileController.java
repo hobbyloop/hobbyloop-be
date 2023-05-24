@@ -4,11 +4,14 @@ import hobbyloop.backend.api.applicationservice.userprofile.UserProfileApplicati
 import hobbyloop.backend.api.controller.userprofile.dto.CreateUserProfileRequestDTO;
 import hobbyloop.backend.api.controller.userprofile.dto.UserProfileResponseDTO;
 import hobbyloop.backend.api.infra.util.ApiResponse;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+@Api(tags = {"회원용 유저 정보와 관련된 API 정보를 제공하는 Controller 입니다."})
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/profile")
@@ -25,6 +28,8 @@ public class UserProfileController {
         return ApiResponse.success(HttpStatus.CREATED);
     }
 
+    @ApiOperation(value = "회원용 유저의 프로필 상세 조회 요청")
+    @ApiImplicitParam(name = "userId", value = "유저 식별자")
     @GetMapping("/{userId}")
     public ApiResponse<UserProfileResponseDTO> getUserProfile(@PathVariable Long userId) {
         return ApiResponse.success(HttpStatus.OK, userProfileApplicationService.getUserProfile(userId));

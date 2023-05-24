@@ -1,7 +1,10 @@
 package hobbyloop.backend.domain.userProfile;
 
+import hobbyloop.backend.domain.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserProfileRepository extends JpaRepository<UserProfile, Long> {
+import java.util.Optional;
 
+public interface UserProfileRepository extends JpaRepository<UserProfile, Long> {
+    Optional<UserProfile> findByUser(User user);
 }

@@ -2,17 +2,16 @@ package hobbyloop.backend.domain.userProfile;
 
 import hobbyloop.backend.domain.user.User;
 import hobbyloop.backend.domain.user.UserStatus;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
 @Builder
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
+@Getter
 public class UserProfile {
 
     @Id
@@ -34,7 +33,8 @@ public class UserProfile {
     private LocalDate birth;
     private String phoneNum;
 
-    private int point;
+    private int chargedPoint;
+    private int givenPoint;
     private String account;
     private LocalDate infoAgreement;
     private LocalDate locationAgreement;

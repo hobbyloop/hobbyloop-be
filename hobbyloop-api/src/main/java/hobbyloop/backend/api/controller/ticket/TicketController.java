@@ -3,6 +3,8 @@ package hobbyloop.backend.api.controller.ticket;
 import hobbyloop.backend.api.applicationservice.ticket.TicketApplicationService;
 import hobbyloop.backend.api.controller.ticket.dto.GetTicketListResponseDTO;
 import hobbyloop.backend.api.infra.util.ApiResponse;
+import hobbyloop.backend.domain.ticket.TicketSortType;
+import hobbyloop.backend.domain.ticket.TicketType;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -28,10 +30,10 @@ public class TicketController {
     @ApiOperation(value = "이용권 리스트 랭킹순으로 조회",
             notes = "ticketType : Figma 내의 이용권 카테고리 그대로 설정 && sortType(정렬기준) : recently(=최신순), amount(=판매량순), score(=평점순)")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "ticketType", value = "이용권의 카테고리"),
-            @ApiImplicitParam(name = "sortType", value = "정렬기준"),
-            @ApiImplicitParam(name = "page", value = "페이지 번호"),
-            @ApiImplicitParam(name = "size", value = "페이지당 데이터 개수")
+            @ApiImplicitParam(name = "ticketType", value = "이용권의 카테고리", dataType = "String", dataTypeClass = TicketType.class),
+            @ApiImplicitParam(name = "sortType", value = "정렬기준", dataType = "String", dataTypeClass = TicketSortType.class),
+            @ApiImplicitParam(name = "page", value = "페이지 번호", dataTypeClass = Integer.class),
+            @ApiImplicitParam(name = "size", value = "페이지당 데이터 개수", dataTypeClass = Integer.class)
     })
     @GetMapping("/list/ranking")
     public ApiResponse<List<GetTicketListResponseDTO>> getTicketsWithRanking(

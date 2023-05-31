@@ -19,7 +19,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(EnumTypeBindingException.class)
     protected ResponseEntity<ExceptionResponse> handle(EnumTypeBindingException error) {
-        log.error("handle error : {}", error.getMessage());
+        log.error("HANDLE ERROR - {}", error.toString());
         return new ResponseEntity<>(ENUM_BINDING_EXCEPTION_RESPONSE, ExceptionStatus.ENUM_TYPE_NOT_FOUND.getHttpStatus());
     }
 }

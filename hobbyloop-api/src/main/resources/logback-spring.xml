@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <configuration>
+    <!-- 출력관련 컨벤션과 로그 형식 지정 -->
     <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter"/>
     <conversionRule conversionWord="wex"
                     converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter"/>
@@ -8,23 +9,27 @@
     <property name="LOG_PATTERN"
               value="${LOG_PATTERN:-%clr(%d{${LOG_DATEFORMAT_PATTERN:-yyyy-MM-dd HH:mm:ss.SSS}}){blue} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"/>
 
+    <!-- IAM 의 id, secret 정의 (application-secret.yml 에 정의되어 있는 값 호출)-->
     <springProperty name="AWS_ACCESS_KEY" source="cloud.aws.credentials.accessKey"/>
     <springProperty name="AWS_SECRET_KEY" source="cloud.aws.credentials.secretKey"/>
 
+    <!-- CONSOLE 이라는 appender 정의해주기 - CONSOLE 출력시 이 appender 사용 -->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <layout class="ch.qos.logback.classic.PatternLayout">
             <Pattern>${LOG_PATTERN}</Pattern>
         </layout>
     </appender>
 
+    <!-- cloud watch 로 로그를 전송하는 appender -->
     <appender name="aws_cloud_watch_log" class="ca.pjer.logback.AwsLogsAppender">
+        <!-- ThresholdFilter 를 사용했기 때문에 WARN 으로 설정시 WARN 과 ERROR 로그만 출력 -->
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>WARN</level>
         </filter>
         <layout>
             <pattern>[%thread] [%date] [%level] [%file:%line] - %msg%n</pattern>
         </layout>
-        <logGroupName>HobbyLoop-log</logGroupName>
+        <logGroupName>hobbyloop-log</logGroupName>
         <logStreamUuidPrefix>HobbyLoop-log-</logStreamUuidPrefix>
         <logRegion>ap-northeast-2</logRegion>
         <maxBatchLogEvents>50</maxBatchLogEvents>
@@ -78,14 +83,18 @@
             <appender-ref ref="CONSOLE"/>
         </logger>
 
-        <logger name="com.zaxxer.hikari.pool.HikariPool" level="info" additivity="false">
+        <logger name="com.zaxxer.hikari.HikariDataSource" level="info" additivity="false">
             <appender-ref ref="CONSOLE"/>
         </logger>
 
         <logger name="com.amazonaws.util.EC2MetadataUtils" level="error" additivity="false">
         </logger>
 
-        <logger name="hoobyloop.backend.api" level="WARN" additivity="false">
+        <logger name="hobbyloop.backend.api.controller.util.GlobalExceptionHandler" level="warn" additivity="false">
+            <appender-ref ref="aws_cloud_watch_log"/>
+        </logger>
+
+        <logger name="hobbyloop.backend.api.controller.util.GlobalExceptionHandler" level="error" additivity="false">
             <appender-ref ref="aws_cloud_watch_log"/>
         </logger>
     </springProfile>

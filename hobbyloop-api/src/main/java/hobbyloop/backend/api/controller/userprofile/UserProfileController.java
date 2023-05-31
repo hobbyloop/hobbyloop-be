@@ -29,7 +29,7 @@ public class UserProfileController {
     }
 
     @ApiOperation(value = "회원용 유저의 프로필 상세 조회 요청")
-    @ApiImplicitParam(name = "userId", value = "유저 식별자")
+    @ApiImplicitParam(name = "userId", value = "유저 식별자", dataTypeClass = Integer.class)
     @GetMapping("/{userId}")
     public ApiResponse<UserProfileResponseDTO> getUserProfile(@PathVariable Long userId) {
         return ApiResponse.success(HttpStatus.OK, userProfileApplicationService.getUserProfile(userId));

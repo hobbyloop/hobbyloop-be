@@ -41,8 +41,27 @@ public class TicketController {
             @RequestParam String sortType,
             Pageable pageable
     ) {
-
         return ApiResponse.success(HttpStatus.OK,
                 ticketApplicationService.getTicketsWithRanking(ticketType, sortType, pageable));
+    }
+
+    @ApiOperation(value = "이용권 리스트 거리순으로 조회",
+            notes = "ticketType : Figma 내의 이용권 카테고리 그대로 설정")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "ticketType", value = "이용권의 카테고리", dataType = "String", dataTypeClass = TicketType.class),
+            @ApiImplicitParam(name = "mapx", value = "경도", dataTypeClass = Integer.class),
+            @ApiImplicitParam(name = "mapy", value = "위도", dataTypeClass = Integer.class),
+            @ApiImplicitParam(name = "page", value = "페이지 번호", dataTypeClass = Integer.class),
+            @ApiImplicitParam(name = "size", value = "페이지당 데이터 개수", dataTypeClass = Integer.class)
+    })
+    @GetMapping("/list/distance")
+    public ApiResponse<List<GetTicketListResponseDTO>> getTicketsWithDistance(
+            @RequestParam String ticketType,
+            @RequestParam double mapx,
+            @RequestParam double mapy,
+            Pageable pageable
+    ) {
+        return ApiResponse.success(HttpStatus.OK,
+                ticketApplicationService.getTicketsWithDistance(ticketType, mapx, mapy, pageable));
     }
 }

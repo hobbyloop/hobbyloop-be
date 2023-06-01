@@ -1,7 +1,6 @@
 package hobbyloop.backend.api.controller.util;
 
-import hobbyloop.backend.domain.EnumTypeBindingException;
-import hobbyloop.backend.domain.ExceptionStatus;
+import hobbyloop.backend.domain.exception.enumbinding.EnumTypeBindingException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -11,15 +10,13 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    private static final ExceptionResponse ENUM_BINDING_EXCEPTION_RESPONSE =
-            ExceptionResponse.from(ExceptionStatus.ENUM_TYPE_NOT_FOUND);
-
     /**
      * enum Type 불일치 Exception
      */
     @ExceptionHandler(EnumTypeBindingException.class)
     protected ResponseEntity<ExceptionResponse> handle(EnumTypeBindingException error) {
         log.error("HANDLE ERROR - {}", error.toString());
-        return new ResponseEntity<>(ENUM_BINDING_EXCEPTION_RESPONSE, ExceptionStatus.ENUM_TYPE_NOT_FOUND.getHttpStatus());
+        ExceptionResponse exceptionResponse = ExceptionResponse.from(error);
+        return new ResponseEntity<>(exceptionResponse, exceptionResponse.getStatus());
     }
 }

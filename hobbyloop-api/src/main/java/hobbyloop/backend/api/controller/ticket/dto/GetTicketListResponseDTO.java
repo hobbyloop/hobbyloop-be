@@ -22,12 +22,17 @@ public class GetTicketListResponseDTO {
     @ApiModelProperty(value = "평점", example = "4.333333")
     private double score;
 
+    private double mapx;
+    private double mapy;
+
     public static GetTicketListResponseDTO from(Ticket ticket) {
         return GetTicketListResponseDTO.builder()
                 .centerName(ticket.getCenter().getName())
                 .address(ticket.getCenter().getAddress())
                 .price(ticket.getPrice())
                 .score(ticket.getScore())
+                .mapx(ticket.getCenter().getMapx())
+                .mapy(ticket.getCenter().getMapy())
                 .build();
     }
 }

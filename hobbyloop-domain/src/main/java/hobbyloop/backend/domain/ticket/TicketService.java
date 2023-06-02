@@ -18,6 +18,11 @@ public class TicketService {
         return navigate(ticketType, sortType, pageable);
     }
 
+    public List<Ticket> getTicketsWithDistance(String ticketType, double mapx, double mapy, Pageable pageable) {
+        TicketType type = TicketType.of(ticketType);
+        return ticketRepository.findAllByTicketTypeAndDistance(type, mapx, mapy, pageable);
+    }
+
     private List<Ticket> navigate(String ticketType, String sortType, Pageable pageable) {
         TicketType type = TicketType.of(ticketType);
         TicketSortType ticketSortType = TicketSortType.of(sortType);

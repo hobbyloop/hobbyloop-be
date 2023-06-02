@@ -23,4 +23,12 @@ public class TicketApplicationService {
                 .collect(Collectors.toList());
 
     }
+
+    public List<GetTicketListResponseDTO> getTicketsWithDistance(String ticketType, double mapx, double mapy, Pageable pageable) {
+        List<Ticket> tickets = ticketService.getTicketsWithDistance(ticketType, mapx, mapy, pageable);
+        return tickets.stream()
+                .map(GetTicketListResponseDTO::from)
+                .collect(Collectors.toList());
+    }
+
 }

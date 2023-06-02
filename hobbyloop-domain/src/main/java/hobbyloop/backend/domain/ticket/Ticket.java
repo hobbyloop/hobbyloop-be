@@ -9,13 +9,14 @@ import javax.persistence.*;
 
 @Entity
 @Getter
+@NamedEntityGraph(name = "Ticket.center", attributeNodes = @NamedAttributeNode("center"))
 public class Ticket extends BaseTime {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ticketId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "centerId")
     private Center center;
 
@@ -27,5 +28,4 @@ public class Ticket extends BaseTime {
     private int days;
     private int salesAmount;
     private double score;
-
 }

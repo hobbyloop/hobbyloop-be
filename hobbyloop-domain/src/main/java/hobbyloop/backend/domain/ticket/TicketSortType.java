@@ -1,6 +1,7 @@
 package hobbyloop.backend.domain.ticket;
 
-import hobbyloop.backend.domain.EnumTypeBindingException;
+import hobbyloop.backend.domain.exception.enumbinding.EnumTypeBindingException;
+import hobbyloop.backend.domain.exception.enumbinding.enumtype.TicketSortTypeBindingException;
 import lombok.Getter;
 
 import java.util.Arrays;
@@ -20,6 +21,6 @@ public enum TicketSortType {
     public static TicketSortType of(String searchType) {
         return Arrays.stream(TicketSortType.values())
                 .filter(ticketSortType -> ticketSortType.getSortType().equals(searchType))
-                .findAny().orElseThrow(EnumTypeBindingException::new);
+                .findAny().orElseThrow(TicketSortTypeBindingException::new);
     }
 }

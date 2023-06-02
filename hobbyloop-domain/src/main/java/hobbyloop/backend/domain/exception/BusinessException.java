@@ -1,4 +1,4 @@
-package hobbyloop.backend.domain;
+package hobbyloop.backend.domain.exception;
 
 public class BusinessException extends RuntimeException {
     private final ExceptionStatus exceptionStatus;

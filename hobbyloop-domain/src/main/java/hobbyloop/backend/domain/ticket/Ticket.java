@@ -2,14 +2,15 @@ package hobbyloop.backend.domain.ticket;
 
 import hobbyloop.backend.domain.BaseTime;
 import hobbyloop.backend.domain.center.Center;
-import hobbyloop.backend.domain.instructor.Instructor;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
-@NamedEntityGraph(name = "Ticket.center", attributeNodes = @NamedAttributeNode("center"))
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Ticket extends BaseTime {
 
     @Id

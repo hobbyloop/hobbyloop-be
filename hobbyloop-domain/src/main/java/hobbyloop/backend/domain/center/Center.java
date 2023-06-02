@@ -1,34 +1,38 @@
 package hobbyloop.backend.domain.center;
 
 import hobbyloop.backend.domain.BaseTime;
+import hobbyloop.backend.domain.ticket.Ticket;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.sql.Time;
-import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
-@NoArgsConstructor
 @Entity
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Center extends BaseTime {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long centerId;
 
-    private String name;
+    private String centerName;
 
     private String address;
 
     private String kakaoLinkUrl;
 
     private int mapx;
-    
+
     private int mapy;
 
-    private int saleCount;
+    private int amount;
 
     private int reviewCount;
+
+    private double score;
 
     private String repImageUrl;
 
@@ -37,4 +41,7 @@ public class Center extends BaseTime {
     private String facilityIntroduction;
 
     private String counselingAvailableTime;
+
+    @OneToMany(mappedBy = "center")
+    private List<Ticket> tickets = new ArrayList<>();
 }

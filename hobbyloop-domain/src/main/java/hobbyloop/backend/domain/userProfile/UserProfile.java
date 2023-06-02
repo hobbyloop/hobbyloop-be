@@ -36,7 +36,4 @@ public class UserProfile {
     private int chargedPoint;
     private int givenPoint;
     private String account;
-    private LocalDate infoAgreement;
-    private LocalDate locationAgreement;
-
 }

@@ -25,7 +25,7 @@ public class UserTicketInfoDTO {
 
     public static UserTicketInfoDTO from(UserTicket userTicket) {
         return UserTicketInfoDTO.builder()
-                .centerName(userTicket.getCenter().getName())
+                .centerName(userTicket.getCenter().getCenterName())
                 .remainingCounts(userTicket.getRemainingCounts())
                 .endDate(userTicket.getEndDate())
                 .build();

@@ -26,7 +26,7 @@ public class ReservationResponseDTO {
 
     public static ReservationResponseDTO from(Reservation reservation) {
         return ReservationResponseDTO.builder()
-                .centerName(reservation.getLesson().getCenter().getName())
+                .centerName(reservation.getLesson().getCenter().getCenterName())
                 .lessonDay(reservation.getLesson().getLessonDate().toLocalDate())
                 .lessonCapacity(reservation.getLesson().getLessonCapacity())
                 .lessonEmptySpace(reservation.getLesson().getLessonEmptySpace())

@@ -23,6 +23,7 @@ public class Center extends BaseTime {
     private String kakaoLinkUrl;
 
     private int mapx;
+    
     private int mapy;
 
     private int saleCount;

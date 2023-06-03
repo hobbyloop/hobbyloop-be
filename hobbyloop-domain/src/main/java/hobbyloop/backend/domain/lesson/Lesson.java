@@ -2,6 +2,7 @@ package hobbyloop.backend.domain.lesson;
 
 import hobbyloop.backend.domain.BaseTime;
 import hobbyloop.backend.domain.center.Center;
+import hobbyloop.backend.domain.instructor.DifficultyType;
 import hobbyloop.backend.domain.instructor.Instructor;
 import lombok.Getter;
 
@@ -27,11 +28,19 @@ public class Lesson extends BaseTime {
     @Enumerated(EnumType.STRING)
     private LessonStatus lessonStatus;
 
+    @Enumerated(value = EnumType.STRING)
+    private DifficultyType difficultyType;
+
     private int lessonCapacity;
+
     private int lessonEmptySpace;
 
     private LocalDateTime reservationDeadline;
+
     private LocalDateTime cancelDeadline;
-    private LocalDateTime lessonDate;
+
+    private LocalDateTime lessonStartDateTime;
+
+    private LocalDateTime lessonEndDateTime;
 
 }

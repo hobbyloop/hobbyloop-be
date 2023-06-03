@@ -5,8 +5,6 @@ import hobbyloop.backend.api.controller.center.dto.CenterDistanceListRequestDTO;
 import hobbyloop.backend.api.controller.center.dto.CenterListResponseDTO;
 import hobbyloop.backend.api.controller.center.dto.CenterRankingListRequestDTO;
 import hobbyloop.backend.api.infra.util.ApiResponse;
-import hobbyloop.backend.domain.center.CenterSortType;
-import hobbyloop.backend.domain.ticket.TicketType;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -17,6 +15,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static hobbyloop.backend.api.controller.util.Constant.CENTER_LOGO_AND_LIST;
 
 @Api(tags = {"업체 관련 API 정보를 제공하는 Controller 입니다."})
 @RestController
@@ -62,4 +62,9 @@ public class CenterController {
                         centerDistanceListRequestDTO.getMapy(), pageable));
     }
 
+    @ApiOperation(value = "센터 카테고리 목록 조회")
+    @GetMapping("/type/list")
+    public ApiResponse<List<List<String>>> getCenterTypeList() {
+        return ApiResponse.success(HttpStatus.OK, CENTER_LOGO_AND_LIST);
+    }
 }

@@ -1,6 +1,7 @@
 package hobbyloop.backend.domain.center;
 
 import hobbyloop.backend.domain.BaseTime;
+import hobbyloop.backend.domain.instructor.Instructor;
 import hobbyloop.backend.domain.ticket.Ticket;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -44,4 +45,7 @@ public class Center extends BaseTime {
 
     @OneToMany(mappedBy = "center")
     private List<Ticket> tickets = new ArrayList<>();
+
+    @OneToMany(mappedBy = "center")
+    private List<Instructor> instructors = new ArrayList<>();
 }

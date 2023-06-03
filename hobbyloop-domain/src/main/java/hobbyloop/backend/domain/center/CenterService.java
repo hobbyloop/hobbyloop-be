@@ -44,4 +44,8 @@ public class CenterService {
         }
         return centerRepository.findCentersWithDTOOrderByCreatedTimeDesc(type, user, pageable);
     }
+
+    public Center getCenterById(Long centerId) {
+        return centerRepository.findById(centerId).orElseThrow(EntityNotFoundException::new);
+    }
 }

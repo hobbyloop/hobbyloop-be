@@ -25,14 +25,11 @@ public class User extends BaseTime {
 
     private String password;
 
-    private String socialEmail;
-
     @Column(columnDefinition="TEXT")
     private String accessToken;
     @Column(columnDefinition="TEXT")
     private String refreshToken;
     private String socialId;
-
 
     @Enumerated(value = EnumType.STRING)
     private Role role;

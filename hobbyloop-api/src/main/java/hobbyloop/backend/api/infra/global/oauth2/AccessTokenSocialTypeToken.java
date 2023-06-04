@@ -1,15 +1,16 @@
 package hobbyloop.backend.api.infra.global.oauth2;
 
-import hobbyloop.backend.domain.user.SocialType;
-import lombok.Builder;
+import java.util.Collection;
+
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 
-import java.util.Collection;
+import hobbyloop.backend.domain.user.SocialType;
+import lombok.Builder;
 
 public class AccessTokenSocialTypeToken extends AbstractAuthenticationToken {
 
-    private Object principal;//OAuth2UserDetails 타입
+    private Object principal; //OAuth2UserDetails 타입
 
     private String accessToken;
     private SocialType socialType;
@@ -25,7 +26,7 @@ public class AccessTokenSocialTypeToken extends AbstractAuthenticationToken {
     public AccessTokenSocialTypeToken(Object principal, Collection<? extends GrantedAuthority> authorities) {
         super(authorities);
         this.principal = principal;
-        super.setAuthenticated(true); // must use super, as we override
+        super.setAuthenticated(true);
     }
 
     public String getAccessToken() {

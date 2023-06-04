@@ -1,18 +1,20 @@
 package hobbyloop.backend.api.infra.global.oauth2;
 
-import hobbyloop.backend.domain.user.SocialType;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.util.Assert;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-@AllArgsConstructor
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.util.Assert;
+
+import hobbyloop.backend.domain.user.SocialType;
+import lombok.Builder;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Builder
 public class OAuth2UserDetails implements UserDetails {
 
@@ -56,11 +58,16 @@ public class OAuth2UserDetails implements UserDetails {
     public void setRoles(String... roles) {
         List<GrantedAuthority> authorities = new ArrayList<>(roles.length);
 
-        for (String role : roles) {
-            Assert.isTrue(!role.startsWith("ROLE_"),
+        try {
+            for (String role : roles) {
+                Assert.isTrue(!role.startsWith("ROLE_"),
                     () -> role + " cannot start with ROLE_ (it is automatically added)");
-            authorities.add(new SimpleGrantedAuthority("ROLE_" + role));
+                authorities.add(new SimpleGrantedAuthority("ROLE_" + role));
+            }
+        } catch (Exception e) {
+            log.error(e.toString());
         }
+
         this.authorities = Set.copyOf(authorities);
     }
 

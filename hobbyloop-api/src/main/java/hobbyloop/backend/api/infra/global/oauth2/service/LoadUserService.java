@@ -22,7 +22,6 @@ public class LoadUserService {
 
         SocialLoadStrategy socialLoadStrategy = getSocialLoadStrategy(socialType);//SocialLoadStrategy 설정
         Map<String, Object> socialInfo = socialLoadStrategy.getSocialInfo(authentication.getAccessToken());
-        System.out.println(socialInfo);
         String socialPk = socialLoadStrategy.getSocialPk(socialInfo);//PK 가져오기
         String email = socialLoadStrategy.getEmail(socialInfo);
 

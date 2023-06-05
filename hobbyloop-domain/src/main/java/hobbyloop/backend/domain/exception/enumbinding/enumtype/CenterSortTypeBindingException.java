@@ -5,7 +5,7 @@ import hobbyloop.backend.domain.exception.enumbinding.EnumTypeBindingException;
 
 public class CenterSortTypeBindingException extends EnumTypeBindingException {
 
-    public CenterSortTypeBindingException() {
-        super(ExceptionStatus.CENTER_SORT_TYPE_NOT_FOUND);
-    }
+	public CenterSortTypeBindingException() {
+		super(ExceptionStatus.CENTER_SORT_TYPE_NOT_FOUND);
+	}
 }

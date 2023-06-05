@@ -1,5 +1,10 @@
 package hobbyloop.backend.api.applicationservice.userprofile;
 
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.stereotype.Service;
+
 import hobbyloop.backend.api.controller.userprofile.dto.CreateUserProfileRequestDTO;
 import hobbyloop.backend.api.controller.userprofile.dto.UserProfileResponseDTO;
 import hobbyloop.backend.domain.reservation.Reservation;
@@ -11,35 +16,31 @@ import hobbyloop.backend.domain.user.UserService;
 import hobbyloop.backend.domain.userProfile.UserProfile;
 import hobbyloop.backend.domain.userProfile.UserProfileService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class UserProfileApplicationService {
 
-    private final UserProfileService userProfileService;
-    private final UserService userService;
-    private final ReservationService reservationService;
-    private final UserTicketService userTicketService;
+	private final UserProfileService userProfileService;
+	private final UserService userService;
+	private final ReservationService reservationService;
+	private final UserTicketService userTicketService;
 
-    public void createUserProfile(CreateUserProfileRequestDTO request) {
-        userProfileService.createUserProfile(
-                CreateUserProfileRequestDTO.toUserProfile(request, userService.getUserById(request.getUserId())));
-        userService.updateUserRole(request.getUserId());
-    }
+	public void createUserProfile(CreateUserProfileRequestDTO request) {
+		userProfileService.createUserProfile(
+			CreateUserProfileRequestDTO.toUserProfile(request, userService.getUserById(request.getUserId())));
+		userService.updateUserRole(request.getUserId());
+	}
 
-    public UserProfileResponseDTO getUserProfile(Long userId) {
-        User user = userService.getUserById(userId);
-        UserProfile userProfile = userProfileService.findUserProfileByUser(user);
-        Optional<Reservation> reservation = reservationService.findEarliestReservationByUser(user);
-        List<UserTicket> userTickets = userTicketService.findAllUserTicketsByUser(user);
+	public UserProfileResponseDTO getUserProfile(Long userId) {
+		User user = userService.getUserById(userId);
+		UserProfile userProfile = userProfileService.findUserProfileByUser(user);
+		Optional<Reservation> reservation = reservationService.findEarliestReservationByUser(user);
+		List<UserTicket> userTickets = userTicketService.findAllUserTicketsByUser(user);
 
-        if (reservation.isEmpty()) {
-            return UserProfileResponseDTO.from(userTickets, userProfile);
-        }
-        return UserProfileResponseDTO.from(reservation.get(), userTickets, userProfile);
-    }
+		if (reservation.isEmpty()) {
+			return UserProfileResponseDTO.from(userTickets, userProfile);
+		}
+		return UserProfileResponseDTO.from(reservation.get(), userTickets, userProfile);
+	}
 }

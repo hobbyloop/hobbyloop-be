@@ -5,7 +5,7 @@ import hobbyloop.backend.domain.exception.enumbinding.EnumTypeBindingException;
 
 public class TicketTypeBindingException extends EnumTypeBindingException {
 
-    public TicketTypeBindingException() {
-        super(ExceptionStatus.TICKET_TYPE_NOT_FOUND);
-    }
+	public TicketTypeBindingException() {
+		super(ExceptionStatus.TICKET_TYPE_NOT_FOUND);
+	}
 }

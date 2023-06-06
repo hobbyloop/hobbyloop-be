@@ -12,10 +12,12 @@ import org.springframework.util.Assert;
 
 import hobbyloop.backend.domain.user.SocialType;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Builder
+@Getter
 public class OAuth2UserDetails implements UserDetails {
 
     private SocialType socialType;
@@ -28,31 +30,9 @@ public class OAuth2UserDetails implements UserDetails {
 
     private Set<GrantedAuthority> authorities;
 
-    public SocialType getSocialType() {
-        return socialType;
-    }
-
-    public String getSocialId() {
-        return socialId;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
-    }
-
     @Override
     public String getPassword() {
         return null;
-    }
-
-    @Override
-    public String getUsername() {
-        return username;
     }
 
     public void setRoles(String... roles) {

@@ -1,25 +1,25 @@
 package hobbyloop.backend.domain.userProfile;
 
-import hobbyloop.backend.domain.user.User;
-import lombok.RequiredArgsConstructor;
+import javax.persistence.EntityExistsException;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityExistsException;
-import java.util.Optional;
+import hobbyloop.backend.domain.user.User;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class UserProfileService {
-    private final UserProfileRepository userProfileRepository;
+	private final UserProfileRepository userProfileRepository;
 
-    @Transactional
-    public UserProfile createUserProfile(UserProfile userProfile) {
-        return userProfileRepository.save(userProfile);
-    }
+	@Transactional
+	public UserProfile createUserProfile(UserProfile userProfile) {
+		return userProfileRepository.save(userProfile);
+	}
 
-    public UserProfile findUserProfileByUser(User user) {
-        return userProfileRepository.findByUser(user).orElseThrow(EntityExistsException::new);
-    }
+	public UserProfile findUserProfileByUser(User user) {
+		return userProfileRepository.findByUser(user).orElseThrow(EntityExistsException::new);
+	}
 }

@@ -9,6 +9,7 @@ public enum Role {
 
     GUEST("ROLE_GUEST"),
     USER("ROLE_USER"),
+    CENTER("ROLE_CENTER"),
     ADMIN("ROLE_ADMIN");
 
 

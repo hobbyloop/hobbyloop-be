@@ -17,7 +17,7 @@ public class GoogleLoadStrategy extends SocialLoadStrategy {
 				SocialType.GOOGLE.getMethod(),
 				request,
 				RESPONSE_TYPE);
-			return response.getBody();//구글은 sub를 PK로 사용
+			return response.getBody();
 		} catch (Exception e) {
 			log.error("AccessToken을 사용하여 GOOGLE 유저정보를 받아오던 중 예외가 발생했습니다 {}", e.toString());
 			throw e;

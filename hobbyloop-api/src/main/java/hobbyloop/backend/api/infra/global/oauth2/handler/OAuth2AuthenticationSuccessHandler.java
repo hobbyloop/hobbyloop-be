@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import hobbyloop.backend.api.applicationservice.user.UserApplicationService;
 import hobbyloop.backend.api.infra.global.jwt.service.JwtService;
@@ -18,7 +17,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
 public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
 	private final JwtService jwtService;

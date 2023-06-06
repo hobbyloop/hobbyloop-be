@@ -53,12 +53,12 @@ public class OAuth2AccessTokenAuthenticationFilter extends AbstractAuthenticatio
 		return this.getAuthenticationManager().authenticate(new AccessTokenSocialTypeToken(accessToken, socialType));
 	}
 
-	private SocialType extractSocialType(HttpServletRequest request) {//요청을 처리하는 코드이다
+	private SocialType extractSocialType(HttpServletRequest request) {
 		return Arrays.stream(SocialType.values())
 			.filter(socialType ->
 				socialType.getSocialName()
 					.equals(request.getRequestURI().substring(DEFAULT_OAUTH2_LOGIN_REQUEST_URL_PREFIX.length())))
 			.findFirst()
-			.orElseThrow(() -> new IllegalArgumentException("잘못된 URL 주소입니다"));
+			.orElseThrow(() -> new IllegalArgumentException("잘못된 URL 주소입니다")); // todo NotSupportedSocialProviderException 정의 후 처리
 	}
 }

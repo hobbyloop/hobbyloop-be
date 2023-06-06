@@ -7,10 +7,12 @@ import org.springframework.security.core.GrantedAuthority;
 
 import hobbyloop.backend.domain.user.SocialType;
 import lombok.Builder;
+import lombok.Getter;
 
+@Getter
 public class AccessTokenSocialTypeToken extends AbstractAuthenticationToken {
 
-    private Object principal; //OAuth2UserDetails 타입
+    private Object principal; // OAuth2UserDetails 타입
 
     private String accessToken;
     private SocialType socialType;
@@ -27,19 +29,6 @@ public class AccessTokenSocialTypeToken extends AbstractAuthenticationToken {
         super(authorities);
         this.principal = principal;
         super.setAuthenticated(true);
-    }
-
-    public String getAccessToken() {
-        return accessToken;
-    }
-
-    public SocialType getSocialType() {
-        return socialType;
-    }
-
-    @Override
-    public Object getPrincipal() {
-        return this.principal;
     }
 
     @Override

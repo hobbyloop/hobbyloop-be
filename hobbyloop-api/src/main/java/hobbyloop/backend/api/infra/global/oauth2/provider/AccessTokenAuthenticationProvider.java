@@ -5,12 +5,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 
+import hobbyloop.backend.api.applicationservice.user.UserApplicationService;
 import hobbyloop.backend.api.infra.global.oauth2.AccessTokenSocialTypeToken;
 import hobbyloop.backend.api.infra.global.oauth2.OAuth2UserDetails;
 import hobbyloop.backend.api.infra.global.oauth2.service.LoadUserService;
 import hobbyloop.backend.domain.user.Role;
 import hobbyloop.backend.domain.user.User;
-import hobbyloop.backend.domain.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -18,7 +18,7 @@ import lombok.RequiredArgsConstructor;
 public class AccessTokenAuthenticationProvider implements AuthenticationProvider {
 
 	private final LoadUserService loadUserService;
-	private final UserRepository userRepository;
+	private final UserApplicationService userApplicationService;
 
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
@@ -34,8 +34,8 @@ public class AccessTokenAuthenticationProvider implements AuthenticationProvider
 	}
 
 	private User saveOrGet(OAuth2UserDetails oAuth2User) {
-		return userRepository.findByEmail(oAuth2User.getEmail())
-			.orElseGet(() -> userRepository.save(
+		return userApplicationService.findByEmail(oAuth2User.getEmail())
+			.orElseGet(() -> userApplicationService.createUser(
 				User.builder()
 					.socialType(oAuth2User.getSocialType())
 					.socialId(oAuth2User.getSocialId())

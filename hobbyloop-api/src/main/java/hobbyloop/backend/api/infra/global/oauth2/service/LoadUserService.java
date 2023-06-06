@@ -42,7 +42,7 @@ public class LoadUserService {
 			case NAVER:
 				return new NaverLoadStrategy();
 			default:
-				throw new IllegalArgumentException("지원하지 않는 로그인 형식입니다");
+				throw new IllegalArgumentException("지원하지 않는 로그인 형식입니다"); // todo UnExpectedURLException 추가 예정
 		}
 	}
 }

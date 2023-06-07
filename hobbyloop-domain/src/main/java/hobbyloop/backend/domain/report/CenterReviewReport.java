@@ -1,13 +1,15 @@
 package hobbyloop.backend.domain.report;
 
-import hobbyloop.backend.domain.review.CenterReview;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
-import javax.persistence.*;
+import hobbyloop.backend.domain.review.CenterReview;
 
 @Entity
 public class CenterReviewReport extends Report {
 
-    @ManyToOne
-    @JoinColumn(name = "reviewId")
-    private CenterReview centerReview;
+	@ManyToOne
+	@JoinColumn(name = "reviewId")
+	private CenterReview centerReview;
 }

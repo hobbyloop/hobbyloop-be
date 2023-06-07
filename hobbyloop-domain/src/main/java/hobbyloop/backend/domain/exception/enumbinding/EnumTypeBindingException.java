@@ -5,7 +5,7 @@ import hobbyloop.backend.domain.exception.ExceptionStatus;
 
 public class EnumTypeBindingException extends BusinessException {
 
-    public EnumTypeBindingException(ExceptionStatus exceptionStatus) {
-        super(exceptionStatus);
-    }
+	public EnumTypeBindingException(ExceptionStatus exceptionStatus) {
+		super(exceptionStatus);
+	}
 }

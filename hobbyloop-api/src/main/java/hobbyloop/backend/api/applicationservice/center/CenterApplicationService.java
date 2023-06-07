@@ -20,18 +20,18 @@ public class CenterApplicationService {
 
 	private final CenterService centerService;
 
-	public List<CenterListResponseDTO> getCentersWithRanking(Long userId, String ticketType, String sortType,
+	public List<CenterListResponseDTO> getCentersWithRanking(String email, String ticketType, String sortType,
 		Pageable pageable) {
-		List<CenterDTO> centers = centerService.getCentersWithRanking(userId, ticketType, sortType, pageable);
+		List<CenterDTO> centers = centerService.getCentersWithRanking(email, ticketType, sortType, pageable);
 		return centers.stream()
 			.map(CenterListResponseDTO::from)
 			.collect(Collectors.toList());
 
 	}
 
-	public List<CenterListResponseDTO> getCentersWithDistance(Long userId, String ticketType, double mapx, double mapy,
+	public List<CenterListResponseDTO> getCentersWithDistance(String email, String ticketType, double mapx, double mapy,
 		Pageable pageable) {
-		List<CenterDTO> centers = centerService.getCentersWithDistance(userId, ticketType, mapx, mapy, pageable);
+		List<CenterDTO> centers = centerService.getCentersWithDistance(email, ticketType, mapx, mapy, pageable);
 		return centers.stream()
 			.map(CenterListResponseDTO::from)
 			.collect(Collectors.toList());

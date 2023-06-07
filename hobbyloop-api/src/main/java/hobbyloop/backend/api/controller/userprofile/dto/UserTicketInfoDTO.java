@@ -17,7 +17,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class UserTicketInfoDTO {
-
 	@ApiModelProperty(name = "업체명", example = "에이블짐 창신점")
 	private String centerName;
 

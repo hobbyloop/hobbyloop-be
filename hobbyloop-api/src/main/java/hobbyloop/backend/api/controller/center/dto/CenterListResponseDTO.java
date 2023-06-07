@@ -13,7 +13,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class CenterListResponseDTO {
-
 	@ApiModelProperty(value = "업체 식별자", example = "1")
 	private Long centerId;
 

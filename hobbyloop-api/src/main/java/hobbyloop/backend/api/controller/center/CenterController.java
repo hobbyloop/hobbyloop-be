@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,12 +38,13 @@ public class CenterController {
 	})
 	@GetMapping("/list/ranking")
 	public ApiResponse<List<CenterListResponseDTO>> getCentersWithRanking(
+		@AuthenticationPrincipal UserDetails userDetails,
 		@RequestBody CenterRankingListRequestDTO centerRankingListRequestDTO,
 		Pageable pageable
 	) {
 		return ApiResponse.success(HttpStatus.OK,
 			centerApplicationService.getCentersWithRanking(
-				centerRankingListRequestDTO.getUserId(),
+				userDetails.getUsername(),
 				centerRankingListRequestDTO.getTicketType(),
 				centerRankingListRequestDTO.getSortType(), pageable));
 	}
@@ -54,12 +57,13 @@ public class CenterController {
 	})
 	@GetMapping("/list/distance")
 	public ApiResponse<List<CenterListResponseDTO>> getTicketsWithDistance(
+		@AuthenticationPrincipal UserDetails details,
 		@RequestBody CenterDistanceListRequestDTO centerDistanceListRequestDTO,
 		Pageable pageable
 	) {
 		return ApiResponse.success(HttpStatus.OK,
 			centerApplicationService.getCentersWithDistance(
-				centerDistanceListRequestDTO.getUserId(),
+				details.getUsername(),
 				centerDistanceListRequestDTO.getTicketType(),
 				centerDistanceListRequestDTO.getMapx(),
 				centerDistanceListRequestDTO.getMapy(), pageable));

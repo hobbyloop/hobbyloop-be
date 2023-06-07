@@ -26,14 +26,15 @@ public class UserProfileApplicationService {
 	private final ReservationService reservationService;
 	private final UserTicketService userTicketService;
 
-	public void createUserProfile(CreateUserProfileRequestDTO request) {
+	public void createUserProfile(String email, CreateUserProfileRequestDTO request) {
+		User user = userService.getsUserByEmail(email);
 		userProfileService.createUserProfile(
-			CreateUserProfileRequestDTO.toUserProfile(request, userService.getUserById(request.getUserId())));
-		userService.updateUserRole(request.getUserId());
+			CreateUserProfileRequestDTO.toUserProfile(request, user));
+		userService.updateUserRole(user);
 	}
 
-	public UserProfileResponseDTO getUserProfile(Long userId) {
-		User user = userService.getUserById(userId);
+	public UserProfileResponseDTO getUserProfile(String email) {
+		User user = userService.getsUserByEmail(email);
 		UserProfile userProfile = userProfileService.findUserProfileByUser(user);
 		Optional<Reservation> reservation = reservationService.findEarliestReservationByUser(user);
 		List<UserTicket> userTickets = userTicketService.findAllUserTicketsByUser(user);

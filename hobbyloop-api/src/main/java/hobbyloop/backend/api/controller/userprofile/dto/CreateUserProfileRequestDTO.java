@@ -14,10 +14,6 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class CreateUserProfileRequestDTO {
-
-	@ApiModelProperty(value = "유저 식별자", example = "1")
-	private Long userId;
-
 	@ApiModelProperty(value = "유저의 이름", example = "임종호")
 	private String name;
 

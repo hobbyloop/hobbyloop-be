@@ -8,9 +8,6 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class CenterRankingListRequestDTO {
-	@ApiModelProperty(value = "유저 식별자", example = "1")
-	private Long userId;
-
 	@ApiModelProperty(value = "이용권의 카테고리", example = "헬스/PT")
 	private String ticketType;
 

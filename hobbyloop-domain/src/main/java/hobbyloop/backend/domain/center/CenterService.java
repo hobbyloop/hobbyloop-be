@@ -20,15 +20,15 @@ public class CenterService {
 	private final CenterRepository centerRepository;
 	private final UserRepository userRepository;
 
-	public List<CenterDTO> getCentersWithRanking(Long userId, String ticketType, String sortType, Pageable pageable) {
-		User user = userRepository.findById(userId).orElseThrow(EntityNotFoundException::new);
+	public List<CenterDTO> getCentersWithRanking(String email, String ticketType, String sortType, Pageable pageable) {
+		User user = userRepository.findByEmail(email).orElseThrow(EntityNotFoundException::new);
 		return navigate(user, ticketType, sortType, pageable);
 	}
 
-	public List<CenterDTO> getCentersWithDistance(Long userId, String ticketType, double mapx, double mapy,
+	public List<CenterDTO> getCentersWithDistance(String email, String ticketType, double mapx, double mapy,
 		Pageable pageable) {
 		TicketType type = TicketType.of(ticketType);
-		User user = userRepository.findById(userId).orElseThrow(EntityNotFoundException::new);
+		User user = userRepository.findByEmail(email).orElseThrow(EntityNotFoundException::new);
 		return centerRepository.findCentersWithDTOOrderByDistanceDesc(type, user, mapx, mapy, pageable);
 	}
 

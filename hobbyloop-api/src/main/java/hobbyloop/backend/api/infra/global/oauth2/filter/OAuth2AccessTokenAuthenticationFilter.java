@@ -16,6 +16,8 @@ import org.springframework.stereotype.Component;
 
 import hobbyloop.backend.api.infra.global.oauth2.AccessTokenSocialTypeToken;
 import hobbyloop.backend.api.infra.global.oauth2.provider.AccessTokenAuthenticationProvider;
+import hobbyloop.backend.domain.exception.enumbinding.enumtype.SocialTypeBindingException;
+import hobbyloop.backend.domain.exception.unexpectedURL.UnExpectedLoginURL;
 import hobbyloop.backend.domain.user.SocialType;
 import lombok.extern.slf4j.Slf4j;
 
@@ -45,7 +47,8 @@ public class OAuth2AccessTokenAuthenticationFilter extends AbstractAuthenticatio
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws
 		AuthenticationException {
 
-		SocialType socialType = extractSocialType(request);
+		String social = extractSocialType(request);
+		SocialType socialType = SocialType.of(social);
 
 		String accessToken = request.getHeader(ACCESS_TOKEN_HEADER_NAME);
 		log.info("{}", socialType.getSocialName());
@@ -53,12 +56,11 @@ public class OAuth2AccessTokenAuthenticationFilter extends AbstractAuthenticatio
 		return this.getAuthenticationManager().authenticate(new AccessTokenSocialTypeToken(accessToken, socialType));
 	}
 
-	private SocialType extractSocialType(HttpServletRequest request) {
-		return Arrays.stream(SocialType.values())
-			.filter(socialType ->
-				socialType.getSocialName()
-					.equals(request.getRequestURI().substring(DEFAULT_OAUTH2_LOGIN_REQUEST_URL_PREFIX.length())))
-			.findFirst()
-			.orElseThrow(() -> new IllegalArgumentException("잘못된 URL 주소입니다")); // todo NotSupportedSocialProviderException 정의 후 처리
+	private String extractSocialType(HttpServletRequest request) {
+		String social = request.getRequestURI().substring(DEFAULT_OAUTH2_LOGIN_REQUEST_URL_PREFIX.length());
+		if (social.isBlank() || !social.matches("^[a-zA-Z]*$")) {
+			throw new UnExpectedLoginURL();
+		}
+		return social;
 	}
 }

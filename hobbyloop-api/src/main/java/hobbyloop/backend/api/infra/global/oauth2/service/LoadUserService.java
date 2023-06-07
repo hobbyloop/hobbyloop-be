@@ -10,11 +10,14 @@ import hobbyloop.backend.api.infra.global.oauth2.strategy.GoogleLoadStrategy;
 import hobbyloop.backend.api.infra.global.oauth2.strategy.KakaoLoadStrategy;
 import hobbyloop.backend.api.infra.global.oauth2.strategy.NaverLoadStrategy;
 import hobbyloop.backend.api.infra.global.oauth2.strategy.SocialLoadStrategy;
+import hobbyloop.backend.domain.exception.enumbinding.enumtype.SocialTypeBindingException;
 import hobbyloop.backend.domain.user.SocialType;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class LoadUserService {
 
 	public OAuth2UserDetails getOAuth2UserDetails(AccessTokenSocialTypeToken authentication) {
@@ -42,7 +45,7 @@ public class LoadUserService {
 			case NAVER:
 				return new NaverLoadStrategy();
 			default:
-				throw new IllegalArgumentException("지원하지 않는 로그인 형식입니다"); // todo UnExpectedURLException 추가 예정
+				throw new SocialTypeBindingException();
 		}
 	}
 }

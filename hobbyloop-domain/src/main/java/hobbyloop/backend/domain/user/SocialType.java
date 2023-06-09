@@ -1,6 +1,12 @@
 package hobbyloop.backend.domain.user;
 
+import java.util.Arrays;
+
 import org.springframework.http.HttpMethod;
+
+import hobbyloop.backend.domain.center.CenterSortType;
+import hobbyloop.backend.domain.exception.enumbinding.enumtype.CenterSortTypeBindingException;
+import hobbyloop.backend.domain.exception.enumbinding.enumtype.SocialTypeBindingException;
 
 public enum SocialType {
     KAKAO(
@@ -43,5 +49,11 @@ public enum SocialType {
 
     public String getUserInfoUrl() {
         return userInfoUrl;
+    }
+
+    public static SocialType of(String socialName) {
+        return Arrays.stream(SocialType.values())
+            .filter(social -> social.getSocialName().equals(socialName))
+            .findAny().orElseThrow(SocialTypeBindingException::new);
     }
 }

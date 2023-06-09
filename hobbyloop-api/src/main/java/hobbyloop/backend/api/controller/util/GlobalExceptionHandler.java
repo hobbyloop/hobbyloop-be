@@ -36,6 +36,7 @@ public class GlobalExceptionHandler {
 		return new ResponseEntity<>(exceptionResponse, exceptionResponse.getStatus());
 	}
 
+
 	/**
 	 * 잘못된 URL 요청 Exception
 	 */

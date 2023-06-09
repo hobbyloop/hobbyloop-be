@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import hobbyloop.backend.domain.exception.ExceptionStatus;
 import hobbyloop.backend.domain.exception.enumbinding.EnumTypeBindingException;
+import hobbyloop.backend.domain.exception.unexpectedURL.UnExpectedLoginURL;
+import hobbyloop.backend.domain.exception.unexpectedURL.UnExpectedURLException;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -33,4 +35,12 @@ public class GlobalExceptionHandler {
 		ExceptionResponse exceptionResponse = ExceptionResponse.from(ExceptionStatus.ENTITY_NOT_FOUND);
 		return new ResponseEntity<>(exceptionResponse, exceptionResponse.getStatus());
 	}
+
+	@ExceptionHandler(UnExpectedURLException.class)
+	protected ResponseEntity<ExceptionResponse> handleUnExpectedURL(UnExpectedLoginURL error) {
+		log.error("HANDLE ERROR - {}", error.toString());
+		ExceptionResponse exceptionResponse = ExceptionResponse.from(error);
+		return new ResponseEntity<>(exceptionResponse, exceptionResponse.getStatus());
+	}
+
 }

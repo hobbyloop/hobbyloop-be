@@ -22,4 +22,9 @@ public class UserProfileService {
 	public UserProfile findUserProfileByUser(User user) {
 		return userProfileRepository.findByUser(user).orElseThrow(EntityExistsException::new);
 	}
+
+	@Transactional
+	public void updateUserProfile(UserProfile userProfile) {
+		userProfileRepository.save(userProfile);
+	}
 }

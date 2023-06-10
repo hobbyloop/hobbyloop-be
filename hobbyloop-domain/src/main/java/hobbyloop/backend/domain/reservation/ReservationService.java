@@ -1,5 +1,6 @@
 package hobbyloop.backend.domain.reservation;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -16,6 +17,7 @@ public class ReservationService {
 	private final ReservationRepository reservationRepository;
 
 	public Optional<Reservation> findEarliestReservationByUser(User user) {
-		return reservationRepository.findTopByUserOrderByLessonDate(user);
+		LocalDateTime now = LocalDateTime.now();
+		return reservationRepository.findFirstByUserAndLessonStartDateTimeAfterOrderByLessonStartDateTimeAsc(user, now);
 	}
 }

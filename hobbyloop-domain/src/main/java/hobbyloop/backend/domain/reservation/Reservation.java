@@ -1,6 +1,6 @@
 package hobbyloop.backend.domain.reservation;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -35,5 +35,5 @@ public class Reservation extends BaseTime {
 	@Enumerated(EnumType.STRING)
 	private ReservationStatus reservationStatus;
 
-	private LocalDate lessonDate;
+	private LocalDateTime lessonStartDateTime;
 }

@@ -14,7 +14,6 @@ import hobbyloop.backend.api.controller.userprofile.dto.CreateUserProfileRequest
 import hobbyloop.backend.api.controller.userprofile.dto.UserProfileResponseDTO;
 import hobbyloop.backend.api.infra.util.ApiResponse;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 
@@ -37,7 +36,6 @@ public class UserProfileController {
 	}
 
 	@ApiOperation(value = "회원용 유저의 프로필 상세 조회 요청")
-	@ApiImplicitParam(name = "userId", value = "유저 식별자", dataTypeClass = Integer.class)
 	@GetMapping("")
 	public ApiResponse<UserProfileResponseDTO> getUserProfile(@AuthenticationPrincipal UserDetails userDetails) {
 		return ApiResponse.success(HttpStatus.OK,

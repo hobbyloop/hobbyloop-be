@@ -9,6 +9,7 @@ import hobbyloop.backend.api.controller.userprofile.dto.CreateUserProfileRequest
 import hobbyloop.backend.api.controller.userprofile.dto.UserProfileResponseDTO;
 import hobbyloop.backend.domain.reservation.Reservation;
 import hobbyloop.backend.domain.reservation.ReservationService;
+import hobbyloop.backend.domain.ticket.TicketType;
 import hobbyloop.backend.domain.ticket.UserTicket;
 import hobbyloop.backend.domain.ticket.UserTicketService;
 import hobbyloop.backend.domain.user.User;
@@ -43,5 +44,12 @@ public class UserProfileApplicationService {
 			return UserProfileResponseDTO.from(userTickets, userProfile);
 		}
 		return UserProfileResponseDTO.from(reservation.get(), userTickets, userProfile);
+	}
+
+	public void changeUserProfile(String email, String ticketType) {
+		User user = userService.getsUserByEmail(email);
+		UserProfile userProfile = userProfileService.findUserProfileByUser(user);
+		userProfile.changeDefaultTicketType(TicketType.of(ticketType));
+		userProfileService.updateUserProfile(userProfile);
 	}
 }

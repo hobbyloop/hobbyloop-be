@@ -1,9 +1,11 @@
 package hobbyloop.backend.api.applicationservice.user;
 
-import java.util.Optional;
+import javax.persistence.EntityNotFoundException;
 
 import org.springframework.stereotype.Service;
 
+import hobbyloop.backend.api.infra.global.oauth2.OAuth2UserDetails;
+import hobbyloop.backend.domain.user.Role;
 import hobbyloop.backend.domain.user.SocialType;
 import hobbyloop.backend.domain.user.User;
 import hobbyloop.backend.domain.user.UserService;
@@ -15,11 +17,7 @@ public class UserApplicationService {
 
 	private final UserService userService;
 
-	public Optional<User> findByEmail(String email) {
-		return userService.getUserByEmail(email);
-	}
-
-	public Optional<User> findByRefreshToken(String refreshToken) {
+	public User findByRefreshToken(String refreshToken) {
 		return userService.getUserByRefreshToken(refreshToken);
 	}
 
@@ -31,11 +29,24 @@ public class UserApplicationService {
 		userService.createUser(user);
 	}
 
-	public Optional<User> getUserBySocialTypeAndSocialId(SocialType socialType, String id) {
+	public User getUserBySocialTypeAndSocialId(SocialType socialType, String id) {
 		return userService.getUserBySocialTypeAndSocialId(socialType, id);
 	}
 
-	public Optional<User> findByAccessToken(String accessToken) {
-		return userService.getUserByAccessToken(accessToken);
+	public User getOrCreateUserByDetails(OAuth2UserDetails details) {
+		User user;
+		try {
+			user = userService.getUserBySocialTypeAndSocialId(details.getSocialType(), details.getSocialId());
+		} catch (EntityNotFoundException e) {
+			user = User.builder()
+				.socialType(details.getSocialType())
+				.socialId(details.getSocialId())
+				.email(details.getEmail())
+				.role(Role.GUEST)
+				.build();
+			createUser(user);
+		}
+
+		return user;
 	}
 }

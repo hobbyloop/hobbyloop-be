@@ -24,12 +24,12 @@ public class UserService {
 		return userRepository.findByEmail(email).orElseThrow(EntityNotFoundException::new);
 	}
 
-	public Optional<User> getUserByRefreshToken(String refreshToken) {
-		return userRepository.findByRefreshToken(refreshToken);
+	public User getUserByRefreshToken(String refreshToken) {
+		return userRepository.findByRefreshToken(refreshToken).orElseThrow(EntityNotFoundException::new);
 	}
 
-	public Optional<User> getUserBySocialTypeAndSocialId(SocialType socialType, String id) {
-		return userRepository.findBySocialTypeAndSocialId(socialType, id);
+	public User getUserBySocialTypeAndSocialId(SocialType socialType, String id) {
+		return userRepository.findBySocialTypeAndSocialId(socialType, id).orElseThrow(EntityNotFoundException::new);
 	}
 
 	public User getUserById(Long userId) {
@@ -46,9 +46,5 @@ public class UserService {
 		user.updateUserRole(Role.USER);
 		userRepository.save(user);
 
-	}
-
-	public Optional<User> getUserByAccessToken(String accessToken) {
-		return userRepository.findByAccessToken(accessToken);
 	}
 }

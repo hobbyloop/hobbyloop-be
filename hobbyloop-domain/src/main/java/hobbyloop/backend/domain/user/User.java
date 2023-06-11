@@ -1,12 +1,23 @@
 package hobbyloop.backend.domain.user;
 
-import hobbyloop.backend.domain.BaseTime;
-import lombok.*;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-import javax.persistence.*;
-import java.time.LocalDate;
-import java.util.UUID;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+import hobbyloop.backend.domain.BaseTime;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -15,39 +26,37 @@ import java.util.UUID;
 @AllArgsConstructor
 public class User extends BaseTime {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long userId;
 
-    @Enumerated(value = EnumType.STRING)
-    private SocialType socialType;
-    private String email;
+	@Enumerated(value = EnumType.STRING)
+	private SocialType socialType;
+	private String email;
 
-    private String password;
+	private String password;
 
-    @Column(columnDefinition="TEXT")
-    private String accessToken;
-    @Column(columnDefinition="TEXT")
-    private String refreshToken;
-    private String socialId;
+	@Column(columnDefinition = "TEXT")
+	private String refreshToken;
+	private String socialId;
 
-    @Enumerated(value = EnumType.STRING)
-    private Role role;
+	@Enumerated(value = EnumType.STRING)
+	private Role role;
 
-    // 비밀번호 암호화 메소드
-    public void passwordEncode(PasswordEncoder passwordEncoder) {
-        this.password = passwordEncoder.encode(this.password);
-    }
+	private String roles;
 
-    public void updateRefreshToken(String refreshToken) {
-        this.refreshToken = refreshToken;
-    }
+	public void updateRefreshToken(String refreshToken) {
+		this.refreshToken = refreshToken;
+	}
 
-    public void updateAccessToken(String accessToken) {
-        this.accessToken = accessToken;
-    }
+	public void updateUserRole(Role role) {
+		this.role = role;
+	}
 
-    public void updateUserRole(Role role) {
-        this.role = role;
-    }
+	public List<String> getRoleList() {
+		if (this.roles.length() > 0) {
+			return Arrays.asList(this.roles.split(", "));
+		}
+		return new ArrayList<>();
+	}
 }

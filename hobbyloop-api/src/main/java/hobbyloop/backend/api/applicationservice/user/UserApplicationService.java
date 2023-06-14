@@ -34,19 +34,7 @@ public class UserApplicationService {
 	}
 
 	public User getOrCreateUserByDetails(OAuth2UserDetails details) {
-		User user;
-		try {
-			user = userService.getUserBySocialTypeAndSocialId(details.getSocialType(), details.getSocialId());
-		} catch (EntityNotFoundException e) {
-			user = User.builder()
-				.socialType(details.getSocialType())
-				.socialId(details.getSocialId())
-				.email(details.getEmail())
-				.role(Role.GUEST)
-				.build();
-			createUser(user);
-		}
-
-		return user;
+		return userService.getOrCreateUser(details.getSocialType(), details.getSocialId(),
+			OAuth2UserDetails.toNewUser(details));
 	}
 }

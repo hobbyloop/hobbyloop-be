@@ -6,6 +6,7 @@ import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import hobbyloop.backend.domain.user.Role;
 import hobbyloop.backend.domain.user.SocialType;
 import hobbyloop.backend.domain.user.User;
 import lombok.Builder;
@@ -32,6 +33,15 @@ public class OAuth2UserDetails implements UserDetails {
 		Collection<GrantedAuthority> authorities = new ArrayList<>();
 		user.getRoleList().forEach(r -> authorities.add(() -> r));
 		return authorities;
+	}
+
+	public static User toNewUser(OAuth2UserDetails details) {
+		return User.builder()
+			.socialType(details.getSocialType())
+			.socialId(details.getSocialId())
+			.email(details.getEmail())
+			.role(Role.GUEST)
+			.build();
 	}
 
 	public void setUser(User user) {

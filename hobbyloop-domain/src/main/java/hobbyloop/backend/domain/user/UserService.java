@@ -16,10 +16,6 @@ public class UserService {
 
 	private final UserRepository userRepository;
 
-	public Optional<User> getUserByEmail(String email) {
-		return userRepository.findByEmail(email);
-	}
-
 	public User getsUserByEmail(String email) {
 		return userRepository.findByEmail(email).orElseThrow(EntityNotFoundException::new);
 	}
@@ -30,6 +26,11 @@ public class UserService {
 
 	public User getUserBySocialTypeAndSocialId(SocialType socialType, String id) {
 		return userRepository.findBySocialTypeAndSocialId(socialType, id).orElseThrow(EntityNotFoundException::new);
+	}
+
+	public User getOrCreateUser(SocialType socialType, String id, User newUser) {
+		return userRepository.findBySocialTypeAndSocialId(socialType, id)
+			.orElseGet(() -> userRepository.save(newUser));
 	}
 
 	public User getUserById(Long userId) {

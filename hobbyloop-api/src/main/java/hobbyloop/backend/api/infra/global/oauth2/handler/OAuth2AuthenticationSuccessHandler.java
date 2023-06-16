@@ -35,10 +35,10 @@ public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccess
 	}
 
 	private void loginSuccess(HttpServletResponse response, OAuth2UserDetails userDetails) throws Exception {
-		String accessToken = jwtService.createAccessToken(userDetails.getEmail());
+		String accessToken = jwtService.createAccessToken(userDetails.getSocialType(), userDetails.getSocialId());
 		String refreshToken = jwtService.createRefreshToken();
-		User user = userApplicationService.findByEmail(userDetails.getEmail()).orElseThrow(); // todo UserNotFoundException 추가
-		user.updateAccessToken(accessToken);
+		User user = userApplicationService.getUserBySocialTypeAndSocialId(userDetails.getSocialType(),
+			userDetails.getSocialId());
 		user.updateRefreshToken(refreshToken);
 		response.addHeader(jwtService.getAccessHeader(), "Bearer " + accessToken);
 		response.addHeader(jwtService.getRefreshHeader(), "Bearer " + refreshToken);

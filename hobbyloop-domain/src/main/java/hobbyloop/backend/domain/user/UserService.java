@@ -16,20 +16,28 @@ public class UserService {
 
 	private final UserRepository userRepository;
 
-	public Optional<User> getUserByEmail(String email) {
-		return userRepository.findByEmail(email);
-	}
-
 	public User getsUserByEmail(String email) {
 		return userRepository.findByEmail(email).orElseThrow(EntityNotFoundException::new);
 	}
 
-	public Optional<User> getUserByRefreshToken(String refreshToken) {
-		return userRepository.findByRefreshToken(refreshToken);
+	public User getUserByRefreshToken(String refreshToken) {
+		return userRepository.findByRefreshToken(refreshToken).orElseThrow(EntityNotFoundException::new);
 	}
 
-	public Optional<User> getUserBySocialTypeAndSocialId(SocialType socialType, String id) {
-		return userRepository.findBySocialTypeAndSocialId(socialType, id);
+	public User getUserBySocialTypeAndSocialId(SocialType socialType, String id) {
+		return userRepository.findBySocialTypeAndSocialId(socialType, id).orElseThrow(EntityNotFoundException::new);
+	}
+
+	public User getOrCreateUser(SocialType socialType, String id, String email) {
+		return userRepository.findBySocialTypeAndSocialId(socialType, id)
+			.orElseGet(
+				() -> userRepository.save(User.builder()
+					.socialType(socialType)
+					.socialId(id)
+					.email(email)
+					.role(Role.GUEST)
+					.build()
+				));
 	}
 
 	public User getUserById(Long userId) {
@@ -46,9 +54,5 @@ public class UserService {
 		user.updateUserRole(Role.USER);
 		userRepository.save(user);
 
-	}
-
-	public Optional<User> getUserByAccessToken(String accessToken) {
-		return userRepository.findByAccessToken(accessToken);
 	}
 }

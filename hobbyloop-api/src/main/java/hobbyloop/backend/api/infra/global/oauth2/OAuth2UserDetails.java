@@ -2,15 +2,13 @@ package hobbyloop.backend.api.infra.global.oauth2;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
-import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.util.Assert;
 
+import hobbyloop.backend.domain.user.Role;
 import hobbyloop.backend.domain.user.SocialType;
+import hobbyloop.backend.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -20,54 +18,58 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 public class OAuth2UserDetails implements UserDetails {
 
-    private SocialType socialType;
+	private User user;
 
-    private String socialId;
+	private SocialType socialType;
 
-    private String username;
+	private String socialId;
 
-    private String email;
+	private String username;
 
-    private Set<GrantedAuthority> authorities;
+	private String email;
 
-    @Override
-    public String getPassword() {
-        return null;
-    }
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		Collection<GrantedAuthority> authorities = new ArrayList<>();
+		user.getRoleList().forEach(r -> authorities.add(() -> r));
+		return authorities;
+	}
 
-    public void setRoles(String... roles) {
-        List<GrantedAuthority> authorities = new ArrayList<>(roles.length);
+	public static User toNewUser(OAuth2UserDetails details) {
+		return User.builder()
+			.socialType(details.getSocialType())
+			.socialId(details.getSocialId())
+			.email(details.getEmail())
+			.role(Role.GUEST)
+			.build();
+	}
 
-        try {
-            for (String role : roles) {
-                Assert.isTrue(!role.startsWith("ROLE_"),
-                    () -> role + " cannot start with ROLE_ (it is automatically added)");
-                authorities.add(new SimpleGrantedAuthority("ROLE_" + role));
-            }
-        } catch (Exception e) {
-            log.error(e.toString());
-        }
+	public void setUser(User user) {
+		this.user = user;
+	}
 
-        this.authorities = Set.copyOf(authorities);
-    }
+	@Override
+	public String getPassword() {
+		return null;
+	}
 
-    @Override
-    public boolean isAccountNonExpired() {
-        return false;
-    }
+	@Override
+	public boolean isAccountNonExpired() {
+		return false;
+	}
 
-    @Override
-    public boolean isAccountNonLocked() {
-        return false;
-    }
+	@Override
+	public boolean isAccountNonLocked() {
+		return false;
+	}
 
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return false;
-    }
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return false;
+	}
 
-    @Override
-    public boolean isEnabled() {
-        return false;
-    }
+	@Override
+	public boolean isEnabled() {
+		return false;
+	}
 }

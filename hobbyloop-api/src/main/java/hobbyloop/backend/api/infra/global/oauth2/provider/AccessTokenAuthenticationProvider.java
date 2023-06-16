@@ -5,12 +5,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 
-import hobbyloop.backend.api.applicationservice.user.UserApplicationService;
 import hobbyloop.backend.api.infra.global.oauth2.AccessTokenSocialTypeToken;
 import hobbyloop.backend.api.infra.global.oauth2.OAuth2UserDetails;
 import hobbyloop.backend.api.infra.global.oauth2.service.LoadUserService;
-import hobbyloop.backend.domain.user.Role;
 import hobbyloop.backend.domain.user.User;
+import hobbyloop.backend.domain.user.UserService;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -18,31 +17,20 @@ import lombok.RequiredArgsConstructor;
 public class AccessTokenAuthenticationProvider implements AuthenticationProvider {
 
 	private final LoadUserService loadUserService;
-	private final UserApplicationService userApplicationService;
+	private final UserService userService;
 
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 		OAuth2UserDetails oAuth2User = loadUserService.getOAuth2UserDetails((AccessTokenSocialTypeToken)authentication);
 
-		User user = saveOrGet(oAuth2User);
-		oAuth2User.setRoles(user.getRole().name());
+		User user = userService.getOrCreateUser(oAuth2User.getSocialType(), oAuth2User.getSocialId(),
+			oAuth2User.getEmail());
+		oAuth2User.setUser(user);
 
 		return AccessTokenSocialTypeToken.builder()
 			.principal(oAuth2User)
 			.authorities(oAuth2User.getAuthorities())
 			.build();
-	}
-
-	private User saveOrGet(OAuth2UserDetails oAuth2User) {
-		return userApplicationService.findByEmail(oAuth2User.getEmail())
-			.orElseGet(() -> userApplicationService.createUser(
-				User.builder()
-					.socialType(oAuth2User.getSocialType())
-					.socialId(oAuth2User.getSocialId())
-					.email(oAuth2User.getEmail())
-					.role(Role.GUEST)
-					.build())
-			);
 	}
 
 	@Override

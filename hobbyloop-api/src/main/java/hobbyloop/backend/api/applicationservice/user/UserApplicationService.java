@@ -32,9 +32,4 @@ public class UserApplicationService {
 	public User getUserBySocialTypeAndSocialId(SocialType socialType, String id) {
 		return userService.getUserBySocialTypeAndSocialId(socialType, id);
 	}
-
-	public User getOrCreateUserByDetails(OAuth2UserDetails details) {
-		return userService.getOrCreateUser(details.getSocialType(), details.getSocialId(),
-			OAuth2UserDetails.toNewUser(details));
-	}
 }

@@ -28,9 +28,16 @@ public class UserService {
 		return userRepository.findBySocialTypeAndSocialId(socialType, id).orElseThrow(EntityNotFoundException::new);
 	}
 
-	public User getOrCreateUser(SocialType socialType, String id, User newUser) {
+	public User getOrCreateUser(SocialType socialType, String id, String email) {
 		return userRepository.findBySocialTypeAndSocialId(socialType, id)
-			.orElseGet(() -> userRepository.save(newUser));
+			.orElseGet(
+				() -> userRepository.save(User.builder()
+					.socialType(socialType)
+					.socialId(id)
+					.email(email)
+					.role(Role.GUEST)
+					.build()
+				));
 	}
 
 	public User getUserById(Long userId) {

@@ -35,10 +35,9 @@ public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccess
 	}
 
 	private void loginSuccess(HttpServletResponse response, OAuth2UserDetails userDetails) throws Exception {
-		String accessToken = jwtService.createAccessToken(userDetails.getSocialType(), userDetails.getSocialId());
+		String accessToken = jwtService.createAccessToken(userDetails.getUsername());
 		String refreshToken = jwtService.createRefreshToken();
-		User user = userApplicationService.getUserBySocialTypeAndSocialId(userDetails.getSocialType(),
-			userDetails.getSocialId());
+		User user = userApplicationService.getUserByUsername(userDetails.getUsername());
 		user.updateRefreshToken(refreshToken);
 		response.addHeader(jwtService.getAccessHeader(), "Bearer " + accessToken);
 		response.addHeader(jwtService.getRefreshHeader(), "Bearer " + refreshToken);

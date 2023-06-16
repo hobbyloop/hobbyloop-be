@@ -1,12 +1,7 @@
 package hobbyloop.backend.api.applicationservice.user;
 
-import javax.persistence.EntityNotFoundException;
-
 import org.springframework.stereotype.Service;
 
-import hobbyloop.backend.api.infra.global.oauth2.OAuth2UserDetails;
-import hobbyloop.backend.domain.user.Role;
-import hobbyloop.backend.domain.user.SocialType;
 import hobbyloop.backend.domain.user.User;
 import hobbyloop.backend.domain.user.UserService;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +24,7 @@ public class UserApplicationService {
 		userService.createUser(user);
 	}
 
-	public User getUserBySocialTypeAndSocialId(SocialType socialType, String id) {
-		return userService.getUserBySocialTypeAndSocialId(socialType, id);
+	public User getUserByUsername(String username) {
+		return userService.getUserByUsername(username);
 	}
 }

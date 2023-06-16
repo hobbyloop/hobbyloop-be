@@ -33,15 +33,12 @@ public class User extends BaseTime {
 	@Enumerated(value = EnumType.STRING)
 	private SocialType socialType;
 	private String email;
-
+	private String username;
 	private String password;
 
 	@Column(columnDefinition = "TEXT")
 	private String refreshToken;
 	private String socialId;
-
-	@Enumerated(value = EnumType.STRING)
-	private Role role;
 
 	private String roles;
 
@@ -49,8 +46,8 @@ public class User extends BaseTime {
 		this.refreshToken = refreshToken;
 	}
 
-	public void updateUserRole(Role role) {
-		this.role = role;
+	public void appendUserRole(Role role) {
+		this.roles += ", " + role;
 	}
 
 	public List<String> getRoleList() {

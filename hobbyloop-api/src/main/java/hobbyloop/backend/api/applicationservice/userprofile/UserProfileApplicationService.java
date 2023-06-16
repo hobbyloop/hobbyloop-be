@@ -12,6 +12,7 @@ import hobbyloop.backend.domain.reservation.ReservationService;
 import hobbyloop.backend.domain.ticket.TicketType;
 import hobbyloop.backend.domain.ticket.UserTicket;
 import hobbyloop.backend.domain.ticket.UserTicketService;
+import hobbyloop.backend.domain.user.Role;
 import hobbyloop.backend.domain.user.User;
 import hobbyloop.backend.domain.user.UserService;
 import hobbyloop.backend.domain.userProfile.UserProfile;
@@ -31,7 +32,7 @@ public class UserProfileApplicationService {
 		User user = userService.getsUserByEmail(email);
 		userProfileService.createUserProfile(
 			CreateUserProfileRequestDTO.toUserProfile(request, user));
-		userService.updateUserRole(user);
+		userService.appendUserRole(user, Role.USER);
 	}
 
 	public UserProfileResponseDTO getUserProfile(String email) {

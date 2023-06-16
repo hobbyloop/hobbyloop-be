@@ -14,7 +14,6 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 
 import hobbyloop.backend.api.applicationservice.user.UserApplicationService;
-import hobbyloop.backend.domain.user.SocialType;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -46,20 +45,18 @@ public class JwtService {
 	 */
 	private static final String ACCESS_TOKEN_SUBJECT = "AccessToken";
 	private static final String REFRESH_TOKEN_SUBJECT = "RefreshToken";
-	private static final String SOCIAL_NAME_CLAIM = "socialName";
-	private static final String SOCIAL_ID_CLAIM = "socialID";
+	private static final String USERNAME_CLAIM = "username";
 	private static final String BEARER = "Bearer ";
 
 	private final UserApplicationService userApplicationService;
 
-	public String createAccessToken(SocialType socialType, String socialId) {
+	public String createAccessToken(String username) {
 		Date now = new Date();
 		return JWT.create()
 			.withSubject(ACCESS_TOKEN_SUBJECT)
 			.withExpiresAt(new Date(now.getTime() + accessTokenExpirationPeriod))
 			//추가하실 경우 .withClaim(클래임 이름, 클래임 값) 으로 설정해주시면 됩니다
-			.withClaim(SOCIAL_NAME_CLAIM, socialType.getSocialName())
-			.withClaim(SOCIAL_ID_CLAIM, socialId)
+			.withClaim(USERNAME_CLAIM, username)
 			.sign(Algorithm.HMAC512(secretKey));
 	}
 
@@ -98,14 +95,9 @@ public class JwtService {
 			.map(refreshToken -> refreshToken.replace(BEARER, ""));
 	}
 
-	public SocialType extractSocialType(String accessToken) {
+	public String extractUsername(String accessToken) {
 		DecodedJWT jwt = JWT.decode(accessToken);
-		return SocialType.of(jwt.getClaim(SOCIAL_NAME_CLAIM).asString());
-	}
-
-	public String extractSocialId(String accessToken) {
-		DecodedJWT jwt = JWT.decode(accessToken);
-		return jwt.getClaim(SOCIAL_ID_CLAIM).asString();
+		return jwt.getClaim(USERNAME_CLAIM).asString();
 	}
 
 	public void setAccessTokenHeader(HttpServletResponse response, String accessToken) {

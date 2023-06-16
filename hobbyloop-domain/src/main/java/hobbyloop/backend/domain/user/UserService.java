@@ -14,10 +14,6 @@ public class UserService {
 
 	private final UserRepository userRepository;
 
-	public User getsUserByEmail(String email) {
-		return userRepository.findByEmail(email).orElseThrow(EntityNotFoundException::new);
-	}
-
 	public User getUserByRefreshToken(String refreshToken) {
 		return userRepository.findByRefreshToken(refreshToken).orElseThrow(EntityNotFoundException::new);
 	}

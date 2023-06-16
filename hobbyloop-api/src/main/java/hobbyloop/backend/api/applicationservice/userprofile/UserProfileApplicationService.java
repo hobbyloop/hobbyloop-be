@@ -28,15 +28,15 @@ public class UserProfileApplicationService {
 	private final ReservationService reservationService;
 	private final UserTicketService userTicketService;
 
-	public void createUserProfile(String email, CreateUserProfileRequestDTO request) {
-		User user = userService.getsUserByEmail(email);
+	public void createUserProfile(String username, CreateUserProfileRequestDTO request) {
+		User user = userService.getUserByUsername(username);
 		userProfileService.createUserProfile(
 			CreateUserProfileRequestDTO.toUserProfile(request, user));
 		userService.appendUserRole(user, Role.USER);
 	}
 
-	public UserProfileResponseDTO getUserProfile(String email) {
-		User user = userService.getsUserByEmail(email);
+	public UserProfileResponseDTO getUserProfile(String username) {
+		User user = userService.getUserByUsername(username);
 		UserProfile userProfile = userProfileService.findUserProfileByUser(user);
 		Optional<Reservation> reservation = reservationService.findEarliestReservationByUser(user);
 		List<UserTicket> userTickets = userTicketService.findAllUserTicketsByUser(user);
@@ -47,8 +47,8 @@ public class UserProfileApplicationService {
 		return UserProfileResponseDTO.from(reservation.get(), userTickets, userProfile);
 	}
 
-	public void changeUserProfile(String email, String ticketType) {
-		User user = userService.getsUserByEmail(email);
+	public void changeUserProfile(String username, String ticketType) {
+		User user = userService.getUserByUsername(username);
 		UserProfile userProfile = userProfileService.findUserProfileByUser(user);
 		userProfile.changeDefaultTicketType(TicketType.of(ticketType));
 		userProfileService.updateUserProfile(userProfile);

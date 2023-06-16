@@ -33,7 +33,7 @@ public class User extends BaseTime {
 	@Enumerated(value = EnumType.STRING)
 	private SocialType socialType;
 	private String email;
-
+	private String username;
 	private String password;
 
 	@Column(columnDefinition = "TEXT")

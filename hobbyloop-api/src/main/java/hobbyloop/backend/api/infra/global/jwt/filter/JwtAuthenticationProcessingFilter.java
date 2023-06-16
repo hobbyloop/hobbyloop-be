@@ -15,7 +15,6 @@ import hobbyloop.backend.api.applicationservice.user.UserApplicationService;
 import hobbyloop.backend.api.infra.global.jwt.service.JwtService;
 import hobbyloop.backend.api.infra.global.oauth2.AccessTokenSocialTypeToken;
 import hobbyloop.backend.api.infra.global.oauth2.OAuth2UserDetails;
-import hobbyloop.backend.domain.user.SocialType;
 import hobbyloop.backend.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -79,8 +78,8 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
 	public void checkRefreshTokenAndReIssueAccessToken(HttpServletResponse response, String refreshToken) {
 		User user = userApplicationService.findByRefreshToken(refreshToken);
 		String reIssuedRefreshToken = reIssueRefreshToken(user);
-		jwtService.sendAccessAndRefreshToken(response, jwtService.createAccessToken(user.getSocialType(),
-			user.getSocialId()), reIssuedRefreshToken);
+		jwtService.sendAccessAndRefreshToken(response, jwtService.createAccessToken(user.getUsername()),
+			reIssuedRefreshToken);
 	}
 
 	/**
@@ -110,9 +109,8 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
 		jwtService.extractAccessToken(request)
 			.filter(jwtService::isTokenValid)
 			.ifPresent(accessToken -> {
-				SocialType socialType = jwtService.extractSocialType(accessToken);
-				String socialId = jwtService.extractSocialId(accessToken);
-				User user = userApplicationService.getUserBySocialTypeAndSocialId(socialType, socialId);
+				String username = jwtService.extractUsername(accessToken);
+				User user = userApplicationService.getUserByUsername(username);
 				saveAuthentication(user);
 			});
 		filterChain.doFilter(request, response);
@@ -136,8 +134,7 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
 	public void saveAuthentication(User user) {
 		OAuth2UserDetails userDetails = OAuth2UserDetails.builder()
 			.user(user)
-			.socialType(user.getSocialType())
-			.socialId(user.getSocialId())
+			.username(user.getUsername())
 			.email(user.getEmail())
 			.build();
 

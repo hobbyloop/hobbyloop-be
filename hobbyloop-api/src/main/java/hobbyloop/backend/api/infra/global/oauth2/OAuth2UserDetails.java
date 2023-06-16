@@ -6,8 +6,6 @@ import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import hobbyloop.backend.domain.user.Role;
-import hobbyloop.backend.domain.user.SocialType;
 import hobbyloop.backend.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,10 +17,6 @@ import lombok.extern.slf4j.Slf4j;
 public class OAuth2UserDetails implements UserDetails {
 
 	private User user;
-
-	private SocialType socialType;
-
-	private String socialId;
 
 	private String username;
 

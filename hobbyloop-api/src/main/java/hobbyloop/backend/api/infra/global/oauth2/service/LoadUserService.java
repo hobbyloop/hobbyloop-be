@@ -30,8 +30,6 @@ public class LoadUserService {
 		String email = socialLoadStrategy.getEmail(socialInfo);
 
 		return OAuth2UserDetails.builder()
-			.socialId(socialPk)
-			.socialType(socialType)
 			.username(socialType + "_" + socialPk)
 			.email(email)
 			.build();

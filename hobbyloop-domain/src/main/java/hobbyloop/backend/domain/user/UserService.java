@@ -1,7 +1,5 @@
 package hobbyloop.backend.domain.user;
 
-import java.util.Optional;
-
 import javax.persistence.EntityNotFoundException;
 
 import org.springframework.stereotype.Service;
@@ -24,24 +22,19 @@ public class UserService {
 		return userRepository.findByRefreshToken(refreshToken).orElseThrow(EntityNotFoundException::new);
 	}
 
-	public User getUserBySocialTypeAndSocialId(SocialType socialType, String id) {
-		return userRepository.findBySocialTypeAndSocialId(socialType, id).orElseThrow(EntityNotFoundException::new);
+	public User getUserByUsername(String username) {
+		return userRepository.findByUsername(username).orElseThrow(EntityNotFoundException::new);
 	}
 
-	public User getOrCreateUser(SocialType socialType, String id, String email) {
-		return userRepository.findBySocialTypeAndSocialId(socialType, id)
+	public User getOrCreateUser(String username, String email) {
+		return userRepository.findByUsername(username)
 			.orElseGet(
 				() -> userRepository.save(User.builder()
-					.socialType(socialType)
-					.socialId(id)
+					.username(username)
 					.email(email)
 					.roles(Role.GUEST.name())
 					.build()
 				));
-	}
-
-	public User getUserById(Long userId) {
-		return userRepository.findById(userId).orElseThrow(EntityNotFoundException::new);
 	}
 
 	@Transactional

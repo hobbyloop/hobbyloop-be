@@ -23,8 +23,7 @@ public class AccessTokenAuthenticationProvider implements AuthenticationProvider
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 		OAuth2UserDetails oAuth2User = loadUserService.getOAuth2UserDetails((AccessTokenSocialTypeToken)authentication);
 
-		User user = userService.getOrCreateUser(oAuth2User.getSocialType(), oAuth2User.getSocialId(),
-			oAuth2User.getEmail());
+		User user = userService.getOrCreateUser(oAuth2User.getUsername(), oAuth2User.getEmail());
 		oAuth2User.setUser(user);
 
 		return AccessTokenSocialTypeToken.builder()

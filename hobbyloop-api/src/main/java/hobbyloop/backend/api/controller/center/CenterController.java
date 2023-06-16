@@ -16,6 +16,7 @@ import hobbyloop.backend.api.controller.center.dto.CenterDistanceListRequestDTO;
 import hobbyloop.backend.api.controller.center.dto.CenterListResponseDTO;
 import hobbyloop.backend.api.controller.center.dto.CenterRankingListRequestDTO;
 import hobbyloop.backend.api.controller.center.dto.CenterTypeDTO;
+import hobbyloop.backend.api.infra.global.oauth2.OAuth2UserDetails;
 import hobbyloop.backend.api.infra.util.ApiResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -38,7 +39,7 @@ public class CenterController {
 	})
 	@GetMapping("/list/ranking")
 	public ApiResponse<List<CenterListResponseDTO>> getCentersWithRanking(
-		@AuthenticationPrincipal UserDetails userDetails,
+		@AuthenticationPrincipal OAuth2UserDetails userDetails,
 		@RequestBody CenterRankingListRequestDTO centerRankingListRequestDTO,
 		Pageable pageable
 	) {
@@ -57,7 +58,7 @@ public class CenterController {
 	})
 	@GetMapping("/list/distance")
 	public ApiResponse<List<CenterListResponseDTO>> getTicketsWithDistance(
-		@AuthenticationPrincipal UserDetails details,
+		@AuthenticationPrincipal OAuth2UserDetails details,
 		@RequestBody CenterDistanceListRequestDTO centerDistanceListRequestDTO,
 		Pageable pageable
 	) {

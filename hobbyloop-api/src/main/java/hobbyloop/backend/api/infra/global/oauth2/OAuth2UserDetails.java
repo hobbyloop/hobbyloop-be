@@ -35,15 +35,6 @@ public class OAuth2UserDetails implements UserDetails {
 		return authorities;
 	}
 
-	public static User toNewUser(OAuth2UserDetails details) {
-		return User.builder()
-			.socialType(details.getSocialType())
-			.socialId(details.getSocialId())
-			.email(details.getEmail())
-			.role(Role.GUEST)
-			.build();
-	}
-
 	public void setUser(User user) {
 		this.user = user;
 	}

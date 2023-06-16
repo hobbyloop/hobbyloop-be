@@ -40,17 +40,14 @@ public class User extends BaseTime {
 	private String refreshToken;
 	private String socialId;
 
-	@Enumerated(value = EnumType.STRING)
-	private Role role;
-
 	private String roles;
 
 	public void updateRefreshToken(String refreshToken) {
 		this.refreshToken = refreshToken;
 	}
 
-	public void updateUserRole(Role role) {
-		this.role = role;
+	public void appendUserRole(Role role) {
+		this.roles += ", " + role;
 	}
 
 	public List<String> getRoleList() {

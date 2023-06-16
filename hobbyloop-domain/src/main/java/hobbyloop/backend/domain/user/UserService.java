@@ -35,7 +35,7 @@ public class UserService {
 					.socialType(socialType)
 					.socialId(id)
 					.email(email)
-					.role(Role.GUEST)
+					.roles(Role.GUEST.name())
 					.build()
 				));
 	}
@@ -50,9 +50,8 @@ public class UserService {
 	}
 
 	@Transactional
-	public void updateUserRole(User user) {
-		user.updateUserRole(Role.USER);
+	public void appendUserRole(User user, Role role) {
+		user.appendUserRole(role);
 		userRepository.save(user);
-
 	}
 }

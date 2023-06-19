@@ -8,21 +8,30 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import hobbyloop.backend.domain.BaseTime;
 import hobbyloop.backend.domain.instructor.Instructor;
 import hobbyloop.backend.domain.ticket.Ticket;
+import hobbyloop.backend.domain.user.User;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Builder
 public class Center extends BaseTime {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long centerId;
+
+	@OneToOne
+	private User user;
 
 	private String centerName;
 
@@ -30,9 +39,15 @@ public class Center extends BaseTime {
 
 	private String kakaoLinkUrl;
 
-	private int mapx;
+	private String phoneNumber;
 
-	private int mapy;
+	private String businessNumber;
+
+	private String accountNumber;
+
+	private double mapx;
+
+	private double mapy;
 
 	private int amount;
 

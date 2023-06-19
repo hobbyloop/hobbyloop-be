@@ -20,6 +20,11 @@ public class CenterService {
 	private final CenterRepository centerRepository;
 	private final UserRepository userRepository;
 
+	@Transactional
+	public Center crateCenter(Center center) {
+		return centerRepository.save(center);
+	}
+
 	public List<CenterDTO> getCentersWithRanking(String username, String ticketType, String sortType, Pageable pageable) {
 		User user = userRepository.findByUsername(username).orElseThrow(EntityNotFoundException::new);
 		return navigate(user, ticketType, sortType, pageable);

@@ -10,8 +10,12 @@ import org.springframework.stereotype.Service;
 
 import hobbyloop.backend.api.controller.center.dto.CenterListResponseDTO;
 import hobbyloop.backend.api.controller.center.dto.CenterTypeDTO;
+import hobbyloop.backend.api.controller.center.dto.CreateCenterRequestDTO;
 import hobbyloop.backend.domain.center.CenterDTO;
 import hobbyloop.backend.domain.center.CenterService;
+import hobbyloop.backend.domain.user.Role;
+import hobbyloop.backend.domain.user.User;
+import hobbyloop.backend.domain.user.UserService;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -19,6 +23,14 @@ import lombok.RequiredArgsConstructor;
 public class CenterApplicationService {
 
 	private final CenterService centerService;
+
+	private final UserService userService;
+
+	public void createCenter(String username, CreateCenterRequestDTO request) {
+		User user = userService.getUserByUsername(username);
+		centerService.crateCenter(CreateCenterRequestDTO.toCenter(request,user));
+		userService.appendUserRole(user, Role.CENTER);
+	}
 
 	public List<CenterListResponseDTO> getCentersWithRanking(String email, String ticketType, String sortType,
 		Pageable pageable) {

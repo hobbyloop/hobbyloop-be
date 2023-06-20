@@ -28,7 +28,9 @@ public class CenterApplicationService {
 
 	public void createCenter(String username, CreateCenterRequestDTO request) {
 		User user = userService.getUserByUsername(username);
-		centerService.crateCenter(CreateCenterRequestDTO.toCenter(request,user));
+		centerService.createCenter(request.getCenterName(), request.getPhoneNumber(), request.getAddress(),
+			request.getBusinessNumber(), request.getAccountNumber(), request.getLongitude(), request.getLatitude(),
+			user);
 		userService.appendUserRole(user, Role.CENTER);
 	}
 
@@ -38,7 +40,6 @@ public class CenterApplicationService {
 		return centers.stream()
 			.map(CenterListResponseDTO::from)
 			.collect(Collectors.toList());
-
 	}
 
 	public List<CenterListResponseDTO> getCentersWithDistance(String email, String ticketType, double mapx, double mapy,

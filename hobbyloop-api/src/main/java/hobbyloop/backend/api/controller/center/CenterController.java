@@ -37,7 +37,6 @@ public class CenterController {
 	@PostMapping("/create")
 	public ApiResponse<Void> createCenter(@ApiIgnore @AuthenticationPrincipal OAuth2UserDetails userDetails,
 		@RequestBody CreateCenterRequestDTO request) {
-
 		centerApplicationService.createCenter(userDetails.getUsername(), request);
 		return ApiResponse.success(HttpStatus.CREATED);
 	}

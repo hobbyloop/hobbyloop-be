@@ -17,6 +17,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class UserTicketInfoDTO {
+	@ApiModelProperty(name = "이용권 이미지")
+	private String ticketImageUrl;
+
 	@ApiModelProperty(name = "업체명", example = "에이블짐 창신점")
 	private String centerName;
 
@@ -28,7 +31,8 @@ public class UserTicketInfoDTO {
 
 	public static UserTicketInfoDTO from(UserTicket userTicket) {
 		return UserTicketInfoDTO.builder()
-			.centerName(userTicket.getCenter().getCenterName())
+			.ticketImageUrl(userTicket.getTicket().getTicketImageUrl())
+			.centerName(userTicket.getTicket().getCenter().getCenterName())
 			.remainingCounts(userTicket.getRemainingCounts())
 			.endDate(userTicket.getEndDate())
 			.build();

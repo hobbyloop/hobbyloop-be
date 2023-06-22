@@ -10,7 +10,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import hobbyloop.backend.domain.BaseTime;
-import hobbyloop.backend.domain.center.Center;
 import hobbyloop.backend.domain.user.User;
 import lombok.Getter;
 
@@ -27,15 +26,14 @@ public class UserTicket extends BaseTime {
 	private Ticket ticket;
 
 	@ManyToOne
-	@JoinColumn(name = "centerId")
-	private Center center;
-
-	@ManyToOne
 	@JoinColumn(name = "userId")
 	private User user;
 
 	private LocalDate startDate;
+
 	private LocalDate endDate;
+
 	private int remainingDays;
+
 	private int remainingCounts;
 }

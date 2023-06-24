@@ -19,10 +19,14 @@ public class UserTicketInfoListResponseDTO {
 	private List<UserTicketInfoResponseDTO> ticketInfos;
 
 	public static UserTicketInfoListResponseDTO from(String centerName, List<UserTicket> userTickets) {
+		List<UserTicketInfoResponseDTO> userTicketInfoFromUserTicket =
+			userTickets.stream()
+				.map(UserTicketInfoResponseDTO::from)
+				.collect(Collectors.toList());
 
 		return UserTicketInfoListResponseDTO.builder()
 			.centerName(centerName)
-			.ticketInfos(userTickets.stream().map(UserTicketInfoResponseDTO::from).collect(Collectors.toList()))
+			.ticketInfos(userTicketInfoFromUserTicket)
 			.build();
 	}
 }

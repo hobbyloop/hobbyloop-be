@@ -12,6 +12,7 @@ import hobbyloop.backend.api.applicationservice.ticket.TicketApplicationService;
 import hobbyloop.backend.api.infra.global.oauth2.OAuth2UserDetails;
 import hobbyloop.backend.api.infra.util.ApiResponse;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import springfox.documentation.annotations.ApiIgnore;
 
@@ -23,6 +24,7 @@ public class TicketController {
 
 	private final TicketApplicationService ticketApplicationService;
 
+	@ApiOperation(value = "자신의 이용권 리스트 조회", notes = "회원용 유저가 자신의 이용권 리스트를 조회하는 요청입니다.")
 	@GetMapping("/list")
 	public ApiResponse<List<UserTicketInfoListResponseDTO>> getUserTicketInfoList(
 		@ApiIgnore @AuthenticationPrincipal OAuth2UserDetails userDetails

@@ -20,7 +20,25 @@ public class CenterService {
 	private final CenterRepository centerRepository;
 	private final UserRepository userRepository;
 
-	public List<CenterDTO> getCentersWithRanking(String username, String ticketType, String sortType, Pageable pageable) {
+	@Transactional
+	public Center createCenter(String centerName, String phoneNumber, String address, String businessNumber,
+		String accountNumber, double longitude, double latitude, User user) {
+		return centerRepository.save(
+			Center.builder()
+				.centerName(centerName)
+				.phoneNumber(phoneNumber)
+				.address(address)
+				.businessNumber(businessNumber)
+				.accountNumber(accountNumber)
+				.mapx(longitude)
+				.mapy(latitude)
+				.user(user)
+				.build()
+		);
+	}
+
+	public List<CenterDTO> getCentersWithRanking(String username, String ticketType, String sortType,
+		Pageable pageable) {
 		User user = userRepository.findByUsername(username).orElseThrow(EntityNotFoundException::new);
 		return navigate(user, ticketType, sortType, pageable);
 	}

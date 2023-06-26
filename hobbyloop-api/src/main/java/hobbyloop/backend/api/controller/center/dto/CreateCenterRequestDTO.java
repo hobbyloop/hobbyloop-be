@@ -31,16 +31,4 @@ public class CreateCenterRequestDTO {
 	@ApiModelProperty(value = "경도(x좌표)", example = "127.123123")
 	private double longitude;
 
-	public static Center toCenter(CreateCenterRequestDTO request, User user) {
-		return Center.builder()
-			.centerName(request.getCenterName())
-			.phoneNumber(request.getPhoneNumber())
-			.user(user)
-			.address(request.getAddress())
-			.businessNumber(request.getBusinessNumber())
-			.accountNumber(request.getAccountNumber())
-			.mapx(request.getLongitude())
-			.mapy(request.getLatitude())
-			.build();
-	}
 }

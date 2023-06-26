@@ -28,8 +28,14 @@ public class CenterApplicationService {
 
 	public void createCenter(String username, CreateCenterRequestDTO request) {
 		User user = userService.getUserByUsername(username);
-		centerService.createCenter(request.getCenterName(), request.getPhoneNumber(), request.getAddress(),
-			request.getBusinessNumber(), request.getAccountNumber(), request.getLongitude(), request.getLatitude(),
+		centerService.createCenter(
+			request.getCenterName(),
+			request.getPhoneNumber(),
+			request.getAddress(),
+			request.getBusinessNumber(),
+			request.getAccountNumber(),
+			request.getLongitude(),
+			request.getLatitude(),
 			user);
 		userService.appendUserRole(user, Role.CENTER);
 	}

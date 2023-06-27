@@ -32,9 +32,15 @@ public class Ticket extends BaseTime {
 	@Enumerated(value = EnumType.STRING)
 	private TicketType ticketType;
 
-	private String keyword;
+	private String ticketName;
+
+	private String ticketImageUrl;
+
 	private int price;
+
 	private int days;
+
 	private int salesAmount;
+
 	private double score;
 }

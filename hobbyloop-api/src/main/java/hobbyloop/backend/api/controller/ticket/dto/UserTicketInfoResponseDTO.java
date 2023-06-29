@@ -1,4 +1,4 @@
-package hobbyloop.backend.api.controller.ticket;
+package hobbyloop.backend.api.controller.ticket.dto;
 
 import java.time.LocalDate;
 
@@ -15,23 +15,20 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class UserTicketInfoResponseDTO {
-	@ApiModelProperty(name = "이용권 이미지 url")
-	private String ticketImageUrl;
-
-	@ApiModelProperty(name = "이용권 명", example = "6대1 필라테스 수업")
-	private String ticketName;
+	private TicketInfo ticketInfo;
 
 	@ApiModelProperty(name = "이용권 기간 시작 날짜", example = "2023-06-20")
-	private LocalDate startDate;
+	protected LocalDate startDate;
 
 	@ApiModelProperty(name = "이용권 기간 끝 날짜", example = "2023-08-30")
-	private LocalDate endDate;
+	protected LocalDate endDate;
 
 	public static UserTicketInfoResponseDTO from(UserTicket userTicket) {
+		TicketInfo ticketInfo = TicketInfo.from(userTicket);
 		return UserTicketInfoResponseDTO.builder()
-			.ticketImageUrl(userTicket.getTicket().getTicketImageUrl())
-			.ticketName(userTicket.getTicket().getTicketName())
+			.ticketInfo(ticketInfo)
 			.startDate(userTicket.getStartDate())
-			.endDate(userTicket.getEndDate()).build();
+			.endDate(userTicket.getEndDate())
+			.build();
 	}
 }

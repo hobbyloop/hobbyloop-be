@@ -41,7 +41,7 @@ else
   echo "> 현재 동작중인 어플리케이션 강제 종료 진행" >> $API_DEPLOY_LOG_PATH
   echo "> kill -15 $CURRENT_PID" >> $API_DEPLOY_LOG_PATH
   kill -15 $CURRENT_PID
-  sleep 3
+  sleep 10
 fi
 
 #정상적으로 종료가 되지 않았다면 강제종료 실행

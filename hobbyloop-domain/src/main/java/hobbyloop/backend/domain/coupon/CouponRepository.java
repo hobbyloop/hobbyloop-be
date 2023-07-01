@@ -10,5 +10,5 @@ import hobbyloop.backend.domain.user.User;
 @Repository
 public interface CouponRepository extends JpaRepository<Coupon, Long> {
 
-	List<Coupon> findAllByUser(User user);
+	List<Coupon> findAllByUserAndCouponStatus(User user, CouponStatus couponStatus);
 }

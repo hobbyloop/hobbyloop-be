@@ -14,13 +14,10 @@ public class TicketModelDTO {
 	private int textReviewReward = 1000;
 	private int photoReviewReward = 1000;
 
-	public TicketModelDTO(Ticket ticket, int maxCouponValue, int basicReward) {
+	public TicketModelDTO(Ticket ticket, int maxCouponValue, int basicReward, int usablePoint) {
 		this.ticket = ticket;
 		this.maxCouponValue = maxCouponValue;
 		this.basicReward = basicReward;
-	}
-
-	public void updateUsablePoint(int userPoint) {
-		this.usablePoint = userPoint;
+		this.usablePoint = usablePoint;
 	}
 }

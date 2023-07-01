@@ -1,6 +1,11 @@
 package hobbyloop.backend.domain.coupon;
 
+import java.time.LocalDateTime;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,4 +28,16 @@ public class Coupon {
 	@ManyToOne
 	private Ticket ticket;
 
+	@Column(nullable = false)
+	private String CouponNum;
+
+	private LocalDateTime expireDate;
+
+	@Enumerated(EnumType.STRING)
+	private CouponStatus couponStatus;
+
+	@Enumerated(EnumType.STRING)
+	private CouponType couponType;
+
+	private int couponValue;
 }

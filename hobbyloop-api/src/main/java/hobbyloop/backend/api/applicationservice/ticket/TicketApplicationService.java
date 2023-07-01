@@ -41,12 +41,8 @@ public class TicketApplicationService {
 		Center center = centerService.getCenterById(centerId);
 		User user = userService.getUserByUsername(username);
 		UserProfile userProfile = userProfileService.findUserProfileByUser(user);
-		int usablePoint = userProfile.getGivenPoint() + userProfile.getChargedPoint();
-
-		return ticketService.getTicketInfoByCenter(center, user).stream()
-			.map(ticketModelDTO -> {
-				ticketModelDTO.updateUsablePoint(usablePoint);
-				return TicketInfoResponseDTO.from(ticketModelDTO);
-			}).collect(Collectors.toList());
+		return ticketService.getTicketInfoByCenter(center, user, userProfile).stream()
+			.map(TicketInfoResponseDTO::from)
+			.collect(Collectors.toList());
 	}
 }

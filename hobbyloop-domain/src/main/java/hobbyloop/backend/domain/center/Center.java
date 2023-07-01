@@ -58,7 +58,7 @@ public class Center extends BaseTime {
 
 	private String repImageUrl;
 
-	private String facilityName;
+	private String centerName;
 
 	private String facilityIntroduction;
 
@@ -74,7 +74,7 @@ public class Center extends BaseTime {
 
 	public void registerFacility(String facilityName, String address, String facilityIntroduction, String phoneNumber,
 		LocalTime operatingStartTime, LocalTime operatingEndTime) {
-		this.facilityName = facilityName;
+		this.centerName = facilityName;
 		this.address = address;
 		this.facilityIntroduction = facilityIntroduction;
 		this.phoneNumber = phoneNumber;

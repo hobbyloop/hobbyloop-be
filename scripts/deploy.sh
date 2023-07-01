@@ -32,30 +32,23 @@ cp $API_BUILD_JAR $API_DEPLOY_PATH
 echo "> 현재 동작중인 어플리케이션 pid 체크" >> $API_DEPLOY_LOG_PATH
 CURRENT_PID=$(pgrep -f $API_JAR_NAME)
 
-#실행 중인 어플리케이션이 있으면 종료
+# 현재 실행중인 어플리케이션 존재 시 강제종료 실행
 if [ -z $CURRENT_PID ]
 then
   echo "> 현재 동작중인 어플리케이션 존재 X" >> $API_DEPLOY_LOG_PATH
 else
   echo "> 현재 동작중인 어플리케이션 존재 O" >> $API_DEPLOY_LOG_PATH
-  echo "> 현재 동작중인 어플리케이션 강제 종료 진행" >> $API_DEPLOY_LOG_PATH
-  echo "> kill -15 $CURRENT_PID" >> $API_DEPLOY_LOG_PATH
-  kill -15 $CURRENT_PID
-  sleep 10
-fi
-
-#정상적으로 종료가 되지 않았다면 강제종료 실행
-if [ -z $CURRENT_PID ]
-then
-  echo "> 현재 동작중인 어플리케이션 존재 X" >> $API_DEPLOY_LOG_PATH
-else
-  echo "> 현재 동작중인 어플리케이션 존재 O" >> $API_DEPLOY_LOG_PATH
-  echo "> 현재 동작중인 어플리케이션 kill -15 옵션으로 종료 실패 -> kill -9 옵션 실행" >> $API_DEPLOY_LOG_PATH
   echo "> kill -9 $CURRENT_PID" >> $API_DEPLOY_LOG_PATH
   kill -9 $CURRENT_PID
 fi
 
-#배포
+# 어플리케이션이 종료될 때 까지 대기
+while [ -n "$CURRENT_PID" ]; do
+    sleep 1
+done
+
+echo "> 현재 동작중인 어플리케이션 존재 X -> 배포 시작"
+# 배포
 DEPLOY_API_JAR=$API_DEPLOY_PATH$API_JAR_NAME
 echo "> DEPLOY_JAR 배포" >> $API_DEPLOY_LOG_PATH
 nohup java -jar $DEPLOY_API_JAR>> $API_APPLICATION_LOG_PATH 2> $API_DEPLOY_ERR_LOG_PATH &
@@ -72,28 +65,22 @@ cp $ADMIN_BUILD_JAR $ADMIN_DEPLOY_PATH
 echo "> 현재 동작중인 어플리케이션 pid 체크" >> $ADMIN_DEPLOY_LOG_PATH
 CURRENT_PID=$(pgrep -f $ADMIN_JAR_NAME)
 
-#실행 중인 어플리케이션이 있으면 종료
+#현재 실행중인 어플리케이션 존재 시 강제종료 실행
 if [ -z $CURRENT_PID ]
 then
   echo "> 현재 동작중인 어플리케이션 존재 X" >> $ADMIN_DEPLOY_LOG_PATH
 else
   echo "> 현재 동작중인 어플리케이션 존재 O" >> $ADMIN_DEPLOY_LOG_PATH
-  echo "> 현재 동작중인 어플리케이션 종료 진행" >> $ADMIN_DEPLOY_LOG_PATH
-  echo "> kill -15 $CURRENT_PID" >> $ADMIN_DEPLOY_LOG_PATH
-  kill -15 $CURRENT_PID
-  sleep 3
-fi
-
-#정상적으로 종료가 되지 않았다면 강제종료 실행
-if [ -z $CURRENT_PID ]
-then
-  echo "> 현재 동작중인 어플리케이션 존재 X" >> $ADMIN_DEPLOY_LOG_PATH
-else
-  echo "> 현재 동작중인 어플리케이션 존재 O" >> $ADMIN_DEPLOY_LOG_PATH
-  echo "> 현재 동작중인 어플리케이션 kill -15 옵션으로 종료 실패 -> kill -9 옵션 실행" >> $ADMIN_DEPLOY_LOG_PATH
   echo "> kill -9 $CURRENT_PID" >> $ADMIN_DEPLOY_LOG_PATH
   kill -9 $CURRENT_PID
 fi
+
+# 어플리케이션이 종료될 때 까지 대기
+while [ -n "$CURRENT_PID" ]; do
+    sleep 1
+done
+
+echo "> 현재 동작중인 어플리케이션 존재 X -> 배포 시작"
 
 DEPLOY_ADMIN_JAR=$ADMIN_DEPLOY_PATH$ADMIN_JAR_NAME
 echo "> DEPLOY_JAR 배포" >> $ADMIN_DEPLOY_LOG_PATH

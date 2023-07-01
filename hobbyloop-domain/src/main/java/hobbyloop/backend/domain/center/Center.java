@@ -1,5 +1,6 @@
 package hobbyloop.backend.domain.center;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +34,7 @@ public class Center extends BaseTime {
 	@OneToOne
 	private User user;
 
-	private String centerName;
+	private String representativeName;
 
 	private String address;
 
@@ -57,15 +58,27 @@ public class Center extends BaseTime {
 
 	private String repImageUrl;
 
-	private String centerIntroduction;
+	private String facilityName;
 
 	private String facilityIntroduction;
 
-	private String counselingAvailableTime;
+	private LocalTime operatingStartTime;
+
+	private LocalTime operatingEndTime;
 
 	@OneToMany(mappedBy = "center")
 	private List<Ticket> tickets = new ArrayList<>();
 
 	@OneToMany(mappedBy = "center")
 	private List<Instructor> instructors = new ArrayList<>();
+
+	public void registerFacility(String facilityName, String address, String facilityIntroduction, String phoneNumber,
+		LocalTime operatingStartTime, LocalTime operatingEndTime) {
+		this.facilityName = facilityName;
+		this.address = address;
+		this.facilityIntroduction = facilityIntroduction;
+		this.phoneNumber = phoneNumber;
+		this.operatingStartTime = operatingStartTime;
+		this.operatingEndTime = operatingEndTime;
+	}
 }

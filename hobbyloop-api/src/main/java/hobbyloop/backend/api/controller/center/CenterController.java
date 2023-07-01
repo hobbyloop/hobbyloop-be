@@ -17,6 +17,7 @@ import hobbyloop.backend.api.controller.center.dto.CenterListResponseDTO;
 import hobbyloop.backend.api.controller.center.dto.CenterRankingListRequestDTO;
 import hobbyloop.backend.api.controller.center.dto.CenterTypeDTO;
 import hobbyloop.backend.api.controller.center.dto.CreateCenterRequestDTO;
+import hobbyloop.backend.api.controller.center.dto.RegisterFacilityRequestDTO;
 import hobbyloop.backend.api.infra.global.oauth2.OAuth2UserDetails;
 import hobbyloop.backend.api.infra.util.ApiResponse;
 import io.swagger.annotations.Api;
@@ -38,6 +39,14 @@ public class CenterController {
 	public ApiResponse<Void> createCenter(@ApiIgnore @AuthenticationPrincipal OAuth2UserDetails userDetails,
 		@RequestBody CreateCenterRequestDTO request) {
 		centerApplicationService.createCenter(userDetails.getUsername(), request);
+		return ApiResponse.success(HttpStatus.CREATED);
+	}
+
+	@ApiOperation(value = "센터 생성", notes = "센터의 프로필 (센터 등록시 추가되는 정보) 을 등록하는 요청")
+	@PostMapping("/facility/register")
+	public ApiResponse<Void> registerFacility(@ApiIgnore @AuthenticationPrincipal OAuth2UserDetails userDetails,
+		@RequestBody RegisterFacilityRequestDTO request) {
+		centerApplicationService.registerFacility(userDetails.getUsername(), request);
 		return ApiResponse.success(HttpStatus.CREATED);
 	}
 

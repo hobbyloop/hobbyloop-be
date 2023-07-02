@@ -42,6 +42,7 @@ else
   kill -9 $CURRENT_PID
 fi
 
+CURRENT_PID=$(pgrep -f $API_JAR_NAME)
 # 어플리케이션이 종료될 때 까지 대기
 while [ -n "$CURRENT_PID" ]; do
     sleep 1
@@ -76,6 +77,7 @@ else
 fi
 
 # 어플리케이션이 종료될 때 까지 대기
+CURRENT_PID=$(pgrep -f $ADMIN_JAR_NAME)
 while [ -n "$CURRENT_PID" ]; do
     sleep 1
 done

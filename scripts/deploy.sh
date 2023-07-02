@@ -48,7 +48,7 @@ while [ -n "$CURRENT_PID" ]; do
     sleep 1
 done
 
-echo "> 현재 동작중인 어플리케이션 존재 X -> 배포 시작"
+echo "> 현재 동작중인 어플리케이션 존재 X -> 배포 시작" >> $API_DEPLOY_LOG_PATH
 # 배포
 DEPLOY_API_JAR=$API_DEPLOY_PATH$API_JAR_NAME
 echo "> DEPLOY_JAR 배포" >> $API_DEPLOY_LOG_PATH
@@ -82,7 +82,7 @@ while [ -n "$CURRENT_PID" ]; do
     sleep 1
 done
 
-echo "> 현재 동작중인 어플리케이션 존재 X -> 배포 시작"
+echo "> 현재 동작중인 어플리케이션 존재 X -> 배포 시작" >> $ADMIN_DEPLOY_LOG_PATH
 
 DEPLOY_ADMIN_JAR=$ADMIN_DEPLOY_PATH$ADMIN_JAR_NAME
 echo "> DEPLOY_JAR 배포" >> $ADMIN_DEPLOY_LOG_PATH

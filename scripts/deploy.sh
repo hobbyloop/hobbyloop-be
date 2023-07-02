@@ -3,7 +3,7 @@ API_PROJECT_NAME="hobbyloop-api"
 
 # hobbyloop-api deploy
 
-API_JAR_PATH="/home/ubuntu/hobbyloop/$API_PROJECT_NAME/build/libs/hobbyloop-api-0.0.1-SNAPSHOT.jar"
+API_JAR_PATH="/home/ubuntu/hobbyloop/$API_PROJECT_NAME/hobbyloop-api-0.0.1-SNAPSHOT.jar"
 API_DEPLOY_PATH="/home/ubuntu/hobbyloop/$API_PROJECT_NAME/"
 API_DEPLOY_LOG_PATH="/home/ubuntu/hobbyloop/$API_PROJECT_NAME/deploy.log"
 API_DEPLOY_ERR_LOG_PATH="/home/ubuntu/hobbyloop/$API_PROJECT_NAME/deploy_err.log"
@@ -13,7 +13,7 @@ API_JAR_NAME=$(basename $API_BUILD_JAR)
 
 ADMIN_PROJECT_NAME="hobbyloop-admin"
 # hobbyloop-admin deploy
-ADMIN_JAR_PATH="/home/ubuntu/hobbyloop/$ADMIN_PROJECT_NAME/build/libs/hobbyloop-admin-0.0.1-SNAPSHOT.jar"
+ADMIN_JAR_PATH="/home/ubuntu/hobbyloop/$ADMIN_PROJECT_NAME/hobbyloop-admin-0.0.1-SNAPSHOT.jar"
 ADMIN_DEPLOY_PATH="/home/ubuntu/hobbyloop/$ADMIN_PROJECT_NAME/"
 ADMIN_DEPLOY_LOG_PATH="/home/ubuntu/hobbyloop/$ADMIN_PROJECT_NAME/deploy.log"
 ADMIN_DEPLOY_ERR_LOG_PATH="/home/ubuntu/hobbyloop/$ADMIN_PROJECT_NAME/deploy_err.log"

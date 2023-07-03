@@ -42,10 +42,10 @@ else
   kill -9 $CURRENT_PID
 fi
 
-CURRENT_PID=$(pgrep -f $API_JAR_NAME)
 # 어플리케이션이 종료될 때 까지 대기
 while [ -n "$CURRENT_PID" ]; do
-    sleep 1
+  CURRENT_PID=$(pgrep -f $API_JAR_NAME)
+  sleep 1
 done
 
 echo "> 현재 동작중인 어플리케이션 존재 X -> 배포 시작" >> $API_DEPLOY_LOG_PATH
@@ -77,9 +77,9 @@ else
 fi
 
 # 어플리케이션이 종료될 때 까지 대기
-CURRENT_PID=$(pgrep -f $ADMIN_JAR_NAME)
 while [ -n "$CURRENT_PID" ]; do
-    sleep 1
+  CURRENT_PID=$(pgrep -f $ADMIN_JAR_NAME)
+  sleep 1
 done
 
 echo "> 현재 동작중인 어플리케이션 존재 X -> 배포 시작" >> $ADMIN_DEPLOY_LOG_PATH

@@ -3,7 +3,7 @@ API_PROJECT_NAME="hobbyloop-api"
 
 # hobbyloop-api deploy
 
-API_JAR_PATH="/home/ubuntu/hobbyloop/$API_PROJECT_NAME/hobbyloop-api-0.0.1-SNAPSHOT.jar"
+API_JAR_PATH="/home/ubuntu/hobbyloop/$API_PROJECT_NAME/build/libs/hobbyloop-api-0.0.1-SNAPSHOT.jar"
 API_DEPLOY_PATH="/home/ubuntu/hobbyloop/$API_PROJECT_NAME/"
 API_DEPLOY_LOG_PATH="/home/ubuntu/hobbyloop/$API_PROJECT_NAME/deploy.log"
 API_DEPLOY_ERR_LOG_PATH="/home/ubuntu/hobbyloop/$API_PROJECT_NAME/deploy_err.log"
@@ -13,7 +13,7 @@ API_JAR_NAME=$(basename $API_BUILD_JAR)
 
 ADMIN_PROJECT_NAME="hobbyloop-admin"
 # hobbyloop-admin deploy
-ADMIN_JAR_PATH="/home/ubuntu/hobbyloop/$ADMIN_PROJECT_NAME/hobbyloop-admin-0.0.1-SNAPSHOT.jar"
+ADMIN_JAR_PATH="/home/ubuntu/hobbyloop/$ADMIN_PROJECT_NAME/build/libs/hobbyloop-admin-0.0.1-SNAPSHOT.jar"
 ADMIN_DEPLOY_PATH="/home/ubuntu/hobbyloop/$ADMIN_PROJECT_NAME/"
 ADMIN_DEPLOY_LOG_PATH="/home/ubuntu/hobbyloop/$ADMIN_PROJECT_NAME/deploy.log"
 ADMIN_DEPLOY_ERR_LOG_PATH="/home/ubuntu/hobbyloop/$ADMIN_PROJECT_NAME/deploy_err.log"
@@ -44,6 +44,8 @@ fi
 
 # 어플리케이션이 종료될 때 까지 대기
 while [ -n "$CURRENT_PID" ]; do
+  echo "> 현재 동작중인 어플리케이션 존재 O" >> $API_DEPLOY_LOG_PATH
+  echo "> 종료될 때 까지 대기" >> $API_DEPLOY_LOG_PATH
   CURRENT_PID=$(pgrep -f $API_JAR_NAME)
   sleep 1
 done
@@ -54,7 +56,7 @@ DEPLOY_API_JAR=$API_DEPLOY_PATH$API_JAR_NAME
 echo "> DEPLOY_JAR 배포" >> $API_DEPLOY_LOG_PATH
 nohup java -jar $DEPLOY_API_JAR>> $API_APPLICATION_LOG_PATH 2> $API_DEPLOY_ERR_LOG_PATH &
 
-sleep 3
+sleep 5
 
 echo "> 배포 종료 : $(date +%c)" >> $API_DEPLOY_LOG_PATH
 
@@ -78,6 +80,8 @@ fi
 
 # 어플리케이션이 종료될 때 까지 대기
 while [ -n "$CURRENT_PID" ]; do
+  echo "> 현재 동작중인 어플리케이션 존재 O" >> $ADMIN_DEPLOY_LOG_PATH
+  echo "> 종료될 때 까지 대기" >> $ADMIN_DEPLOY_LOG_PATH
   CURRENT_PID=$(pgrep -f $ADMIN_JAR_NAME)
   sleep 1
 done

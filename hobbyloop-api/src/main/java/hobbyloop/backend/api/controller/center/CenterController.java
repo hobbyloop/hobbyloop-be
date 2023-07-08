@@ -42,7 +42,7 @@ public class CenterController {
 		return ApiResponse.success(HttpStatus.CREATED);
 	}
 
-	@ApiOperation(value = "센터 생성", notes = "센터의 프로필 (센터 등록시 추가되는 정보) 을 등록하는 요청")
+	@ApiOperation(value = "시설 등록", notes = "시설 정보를 등록하는 요청")
 	@PostMapping("/facility/register")
 	public ApiResponse<Void> registerFacility(@ApiIgnore @AuthenticationPrincipal OAuth2UserDetails userDetails,
 		@RequestBody RegisterFacilityRequestDTO request) {

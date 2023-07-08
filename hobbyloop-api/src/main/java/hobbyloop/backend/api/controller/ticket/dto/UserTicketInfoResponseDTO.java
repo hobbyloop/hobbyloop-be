@@ -1,4 +1,4 @@
-package hobbyloop.backend.api.controller.ticket;
+package hobbyloop.backend.api.controller.ticket.dto;
 
 import java.time.LocalDate;
 

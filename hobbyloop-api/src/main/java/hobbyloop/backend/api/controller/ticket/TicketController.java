@@ -5,10 +5,15 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import hobbyloop.backend.api.applicationservice.ticket.TicketApplicationService;
+import hobbyloop.backend.api.controller.center.dto.RegisterFacilityRequestDTO;
+import hobbyloop.backend.api.controller.ticket.dto.CreateTicketRequestDTO;
+import hobbyloop.backend.api.controller.ticket.dto.UserTicketInfoListResponseDTO;
 import hobbyloop.backend.api.infra.global.oauth2.OAuth2UserDetails;
 import hobbyloop.backend.api.infra.util.ApiResponse;
 import io.swagger.annotations.Api;
@@ -31,5 +36,13 @@ public class TicketController {
 	) {
 		return ApiResponse.success(HttpStatus.OK,
 			ticketApplicationService.getUserTicketInfoListByUser(userDetails.getUsername()));
+	}
+
+	@ApiOperation(value = "이용권 생성", notes = "이용권의 정보를 등록하는 요청")
+	@PostMapping("/create")
+	public ApiResponse<Void> createTicket(@ApiIgnore @AuthenticationPrincipal OAuth2UserDetails userDetails,
+		@RequestBody CreateTicketRequestDTO request) {
+		ticketApplicationService.createTicket(request, userDetails.getUsername());
+		return ApiResponse.success(HttpStatus.CREATED);
 	}
 }

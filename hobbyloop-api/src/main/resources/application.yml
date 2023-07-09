@@ -4,6 +4,10 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 24
+      minimum-idle: 24
+      connection-init-sql: SELECT 1
 
   jpa:
     show-sql: true

@@ -33,11 +33,11 @@ public class CreateTicketRequestDTO {
 	private String ticketEndDate;
 
 	@ApiModelProperty(value = "이용권 총 수량", example = "10")
-	private int amount;
+	private Integer amount;
 
 	@ApiModelProperty(value = "이용권 가격", example = "10000")
-	private int price;
+	private Integer price;
 
 	@ApiModelProperty(value = "이용권 할인율", example = "15")
-	private int discountRate;
+	private Integer discountRate;
 }

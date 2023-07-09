@@ -25,7 +25,6 @@ public class TicketApplicationService {
 	private final UserService userService;
 	private final TicketService ticketService;
 	private final UserTicketService userTicketService;
-
 	private final CenterService centerService;
 
 	public List<UserTicketInfoListResponseDTO> getUserTicketInfoListByUser(String username) {

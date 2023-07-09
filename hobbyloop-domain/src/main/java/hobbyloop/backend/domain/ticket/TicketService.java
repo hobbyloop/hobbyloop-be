@@ -15,6 +15,7 @@ public class TicketService {
 
 	private final TicketRepository ticketRepository;
 
+	@Transactional
 	public Ticket createTicket(String ticketName, LocalDate ticketStartDate, LocalDate ticketEndDate, int amount,
 		int price, int discountRate, Center center) {
 		return ticketRepository.save(

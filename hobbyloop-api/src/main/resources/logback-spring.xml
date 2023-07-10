@@ -61,13 +61,14 @@
             <appender-ref ref="CONSOLE"/>
         </logger>
 
-        <logger name="hoobyloop.backend.api" level="info" additivity="false">
+        <logger name="hobbyloop.backend.api" level="info" additivity="false">
             <appender-ref ref="CONSOLE"/>
         </logger>
     </springProfile>
 
     <springProfile name="prod">
         <root level="info">
+            <appender-ref ref="aws_cloud_watch_log"/>
             <appender-ref ref="CONSOLE"/>
         </root>
 
@@ -90,12 +91,5 @@
         <logger name="com.amazonaws.util.EC2MetadataUtils" level="error" additivity="false">
         </logger>
 
-        <logger name="hobbyloop.backend.api.controller.util.GlobalExceptionHandler" level="warn" additivity="false">
-            <appender-ref ref="aws_cloud_watch_log"/>
-        </logger>
-
-        <logger name="hobbyloop.backend.api.controller.util.GlobalExceptionHandler" level="error" additivity="false">
-            <appender-ref ref="aws_cloud_watch_log"/>
-        </logger>
     </springProfile>
 </configuration>

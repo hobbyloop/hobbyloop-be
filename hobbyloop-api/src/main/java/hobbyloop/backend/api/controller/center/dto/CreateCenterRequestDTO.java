@@ -1,7 +1,5 @@
 package hobbyloop.backend.api.controller.center.dto;
 
-import hobbyloop.backend.domain.center.Center;
-import hobbyloop.backend.domain.user.User;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -11,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class CreateCenterRequestDTO {
 	@ApiModelProperty(value = "대표자 이름", example = "임종호")
-	private String centerName;
+	private String representativeName;
 
 	@ApiModelProperty(value = "전화번호", example = "01038843144")
 	private String phoneNumber;
@@ -30,5 +28,4 @@ public class CreateCenterRequestDTO {
 
 	@ApiModelProperty(value = "경도(x좌표)", example = "127.123123")
 	private double longitude;
-
 }

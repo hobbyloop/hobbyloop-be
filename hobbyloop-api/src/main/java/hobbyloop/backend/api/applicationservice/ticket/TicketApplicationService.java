@@ -1,15 +1,17 @@
 package hobbyloop.backend.api.applicationservice.ticket;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-import hobbyloop.backend.api.controller.ticket.dto.TicketInfoResponseDTO;
+import hobbyloop.backend.api.controller.ticket.dto.CreateTicketRequestDTO;
 import hobbyloop.backend.api.controller.ticket.dto.UserTicketInfoListResponseDTO;
 import hobbyloop.backend.domain.center.Center;
 import hobbyloop.backend.domain.center.CenterService;
+import hobbyloop.backend.domain.ticket.Ticket;
 import hobbyloop.backend.domain.ticket.TicketService;
 import hobbyloop.backend.domain.ticket.UserTicket;
 import hobbyloop.backend.domain.ticket.UserTicketService;
@@ -37,6 +39,7 @@ public class TicketApplicationService {
 			.collect(Collectors.toList());
 	}
 
+
 	public List<TicketInfoResponseDTO> getTicketInfoListOfCenter(Long centerId, String username) {
 		Center center = centerService.getCenterById(centerId);
 		User user = userService.getUserByUsername(username);
@@ -44,5 +47,19 @@ public class TicketApplicationService {
 		return ticketService.getTicketInfoByCenter(center, user, userProfile).stream()
 			.map(TicketInfoResponseDTO::from)
 			.collect(Collectors.toList());
+	}
+  
+	public Ticket createTicket(CreateTicketRequestDTO request, String username) {
+		User user = userService.getUserByUsername(username);
+		Center center = centerService.getCenterByUser(user);
+		return ticketService.createTicket(
+			request.getTicketName(),
+			LocalDate.parse(request.getTicketStartDate()),
+			LocalDate.parse(request.getTicketEndDate()),
+			request.getAmount(),
+			request.getPrice(),
+			request.getDiscountRate(),
+			center
+		);
 	}
 }

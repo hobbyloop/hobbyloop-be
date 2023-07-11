@@ -1,5 +1,6 @@
 package hobbyloop.backend.domain.center;
 
+import java.time.LocalTime;
 import java.util.List;
 
 import javax.persistence.EntityNotFoundException;
@@ -21,11 +22,11 @@ public class CenterService {
 	private final UserRepository userRepository;
 
 	@Transactional
-	public Center createCenter(String centerName, String phoneNumber, String address, String businessNumber,
+	public Center createCenter(String representativeName, String phoneNumber, String address, String businessNumber,
 		String accountNumber, double longitude, double latitude, User user) {
 		return centerRepository.save(
 			Center.builder()
-				.centerName(centerName)
+				.representativeName(representativeName)
 				.phoneNumber(phoneNumber)
 				.address(address)
 				.businessNumber(businessNumber)
@@ -35,6 +36,24 @@ public class CenterService {
 				.user(user)
 				.build()
 		);
+	}
+
+	public Center getCenterByUser(User user) {
+		return centerRepository.findByUser(user).orElseThrow(EntityNotFoundException::new);
+	}
+
+	@Transactional
+	public Center registerFacility(String facilityName, String address, String facilityIntroduction, String phoneNumber,
+		LocalTime operatingStartTime, LocalTime operatingEndTime, Center center) {
+		center.registerFacility(
+			facilityName,
+			address,
+			facilityIntroduction,
+			phoneNumber,
+			operatingStartTime,
+			operatingEndTime
+		);
+		return centerRepository.save(center);
 	}
 
 	public List<CenterDTO> getCentersWithRanking(String username, String ticketType, String sortType,

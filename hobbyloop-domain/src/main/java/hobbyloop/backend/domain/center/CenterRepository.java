@@ -1,6 +1,7 @@
 package hobbyloop.backend.domain.center;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,6 +14,8 @@ import hobbyloop.backend.domain.user.User;
 
 @Repository
 public interface CenterRepository extends JpaRepository<Center, Long> {
+
+	Optional<Center> findByUser(User user);
 
 	@Query((
 		"SELECT new hobbyloop.backend.domain.center.CenterDTO(c.centerId, c.centerName, c.repImageUrl, c.address, c.score, COUNT(t), CASE WHEN cb.center IS NULL THEN false ELSE true END) "

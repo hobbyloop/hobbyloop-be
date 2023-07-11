@@ -2,6 +2,7 @@ package hobbyloop.backend.domain.ticket;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import java.time.LocalDate;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,12 +48,27 @@ public class TicketService {
 		return maxValue;
 	}
 
-	//TODO 쿠폰 적용 로직 설정
 	private int getValueOfCoupon(Coupon coupon, Ticket ticket) {
 		if (coupon.getCouponType().equals(CouponType.FIXED_AMOUNT)) {
 			return ticket.getPrice() - coupon.getCouponValue();
 		} else {
 			return ticket.getPrice() / coupon.getCouponValue();
 		}
+	}
+  
+	@Transactional
+	public Ticket createTicket(String ticketName, LocalDate ticketStartDate, LocalDate ticketEndDate, int amount,
+		int price, int discountRate, Center center) {
+		return ticketRepository.save(
+			Ticket.builder()
+				.ticketName(ticketName)
+				.ticketStartDate(ticketStartDate)
+				.ticketEndDate(ticketEndDate)
+				.amount(amount)
+				.price(price)
+				.discountRate(discountRate)
+				.center(center)
+				.build()
+		);
 	}
 }

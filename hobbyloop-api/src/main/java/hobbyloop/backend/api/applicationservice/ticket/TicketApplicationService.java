@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import hobbyloop.backend.api.controller.ticket.dto.CreateTicketRequestDTO;
+import hobbyloop.backend.api.controller.ticket.dto.TicketInfoResponseDTO;
 import hobbyloop.backend.api.controller.ticket.dto.UserTicketInfoListResponseDTO;
 import hobbyloop.backend.domain.center.Center;
 import hobbyloop.backend.domain.center.CenterService;
@@ -39,7 +40,6 @@ public class TicketApplicationService {
 			.collect(Collectors.toList());
 	}
 
-
 	public List<TicketInfoResponseDTO> getTicketInfoListOfCenter(Long centerId, String username) {
 		Center center = centerService.getCenterById(centerId);
 		User user = userService.getUserByUsername(username);
@@ -48,7 +48,7 @@ public class TicketApplicationService {
 			.map(TicketInfoResponseDTO::from)
 			.collect(Collectors.toList());
 	}
-  
+
 	public Ticket createTicket(CreateTicketRequestDTO request, String username) {
 		User user = userService.getUserByUsername(username);
 		Center center = centerService.getCenterByUser(user);

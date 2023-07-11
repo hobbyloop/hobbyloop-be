@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import hobbyloop.backend.api.applicationservice.ticket.TicketApplicationService;
-import hobbyloop.backend.api.controller.ticket.dto.TicketInfoResponseDTO;
-import hobbyloop.backend.api.controller.center.dto.RegisterFacilityRequestDTO;
 import hobbyloop.backend.api.controller.ticket.dto.CreateTicketRequestDTO;
+import hobbyloop.backend.api.controller.ticket.dto.TicketInfoResponseDTO;
 import hobbyloop.backend.api.controller.ticket.dto.UserTicketInfoListResponseDTO;
 import hobbyloop.backend.api.infra.global.oauth2.OAuth2UserDetails;
 import hobbyloop.backend.api.infra.util.ApiResponse;
@@ -46,6 +46,7 @@ public class TicketController {
 	) {
 		return ApiResponse.success(HttpStatus.OK,
 			ticketApplicationService.getTicketInfoListOfCenter(centerId, userDetails.getUsername()));
+	}
 
 	@ApiOperation(value = "이용권 생성", notes = "이용권의 정보를 등록하는 요청")
 	@PostMapping("/create")

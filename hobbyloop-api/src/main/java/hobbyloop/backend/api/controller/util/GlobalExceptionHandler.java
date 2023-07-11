@@ -19,7 +19,7 @@ public class GlobalExceptionHandler {
 	/**
 	 * enum Type 불일치 Exception
 	 */
-	@ExceptionHandler(EnumTypeBindingException.class)
+	// @ExceptionHandler(EnumTypeBindingException.class)
 	protected ResponseEntity<ExceptionResponse> handleEnumTypeBinding(EnumTypeBindingException error) {
 		log.error("HANDLE ERROR - {}", error.toString());
 		ExceptionResponse exceptionResponse = ExceptionResponse.from(error);

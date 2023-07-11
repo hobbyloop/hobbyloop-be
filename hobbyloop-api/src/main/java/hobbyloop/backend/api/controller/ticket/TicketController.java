@@ -5,12 +5,13 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import hobbyloop.backend.api.applicationservice.ticket.TicketApplicationService;
+import hobbyloop.backend.api.controller.ticket.dto.TicketInfoResponseDTO;
 import hobbyloop.backend.api.controller.center.dto.RegisterFacilityRequestDTO;
 import hobbyloop.backend.api.controller.ticket.dto.CreateTicketRequestDTO;
 import hobbyloop.backend.api.controller.ticket.dto.UserTicketInfoListResponseDTO;
@@ -30,13 +31,21 @@ public class TicketController {
 	private final TicketApplicationService ticketApplicationService;
 
 	@ApiOperation(value = "자신의 이용권 리스트 조회", notes = "회원용 유저가 자신의 이용권 리스트를 조회하는 요청입니다.")
-	@GetMapping("/list")
+	@GetMapping("/user/list")
 	public ApiResponse<List<UserTicketInfoListResponseDTO>> getUserTicketInfoList(
 		@ApiIgnore @AuthenticationPrincipal OAuth2UserDetails userDetails
 	) {
 		return ApiResponse.success(HttpStatus.OK,
 			ticketApplicationService.getUserTicketInfoListByUser(userDetails.getUsername()));
 	}
+
+	@ApiOperation(value = "센터 내 이용권 리스트 조회", notes = "회원용 유저가 센터 내 이용권 목록 조회하는 요청입니다.")
+	@GetMapping("/list/{centerId}")
+	public ApiResponse<List<TicketInfoResponseDTO>> getTicketInfoListByCenter(
+		@ApiIgnore @AuthenticationPrincipal OAuth2UserDetails userDetails, @PathVariable Long centerId
+	) {
+		return ApiResponse.success(HttpStatus.OK,
+			ticketApplicationService.getTicketInfoListOfCenter(centerId, userDetails.getUsername()));
 
 	@ApiOperation(value = "이용권 생성", notes = "이용권의 정보를 등록하는 요청")
 	@PostMapping("/create")

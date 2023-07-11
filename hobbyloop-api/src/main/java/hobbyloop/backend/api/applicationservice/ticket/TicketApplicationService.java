@@ -17,6 +17,8 @@ import hobbyloop.backend.domain.ticket.UserTicket;
 import hobbyloop.backend.domain.ticket.UserTicketService;
 import hobbyloop.backend.domain.user.User;
 import hobbyloop.backend.domain.user.UserService;
+import hobbyloop.backend.domain.userProfile.UserProfile;
+import hobbyloop.backend.domain.userProfile.UserProfileService;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -26,6 +28,7 @@ public class TicketApplicationService {
 	private final TicketService ticketService;
 	private final UserTicketService userTicketService;
 	private final CenterService centerService;
+	private final UserProfileService userProfileService;
 
 	public List<UserTicketInfoListResponseDTO> getUserTicketInfoListByUser(String username) {
 		Map<String, List<UserTicket>> userTicketsGroupByCenter =
@@ -36,6 +39,16 @@ public class TicketApplicationService {
 			.collect(Collectors.toList());
 	}
 
+
+	public List<TicketInfoResponseDTO> getTicketInfoListOfCenter(Long centerId, String username) {
+		Center center = centerService.getCenterById(centerId);
+		User user = userService.getUserByUsername(username);
+		UserProfile userProfile = userProfileService.findUserProfileByUser(user);
+		return ticketService.getTicketInfoByCenter(center, user, userProfile).stream()
+			.map(TicketInfoResponseDTO::from)
+			.collect(Collectors.toList());
+	}
+  
 	public Ticket createTicket(CreateTicketRequestDTO request, String username) {
 		User user = userService.getUserByUsername(username);
 		Center center = centerService.getCenterByUser(user);
@@ -49,5 +62,4 @@ public class TicketApplicationService {
 			center
 		);
 	}
-
 }

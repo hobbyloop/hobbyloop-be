@@ -3,6 +3,7 @@ package hobbyloop.backend.domain.ticket;
 import java.time.LocalDate;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,7 +22,7 @@ public class UserTicket extends BaseTime {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long userTicketId;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ticketId")
 	private Ticket ticket;
 

@@ -54,7 +54,11 @@ public class Ticket extends BaseTime {
 
 	private int days;
 
+	private int count;
+
 	private int salesAmount;
 
 	private double score;
+
+	private int basicReward;
 }

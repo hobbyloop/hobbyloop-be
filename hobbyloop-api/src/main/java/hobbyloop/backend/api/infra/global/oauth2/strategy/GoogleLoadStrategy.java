@@ -5,12 +5,10 @@ import java.util.Map;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 
+import hobbyloop.backend.domain.exception.token.social.GoogleAccessTokenException;
 import hobbyloop.backend.domain.user.SocialType;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 public class GoogleLoadStrategy extends SocialLoadStrategy {
-
 	protected Map<String, Object> sendRequestToSocialSite(HttpEntity request) {
 		try {
 			ResponseEntity<Map<String, Object>> response = restTemplate.exchange(SocialType.GOOGLE.getUserInfoUrl(),
@@ -19,8 +17,7 @@ public class GoogleLoadStrategy extends SocialLoadStrategy {
 				RESPONSE_TYPE);
 			return response.getBody();
 		} catch (Exception e) {
-			log.error("AccessToken을 사용하여 GOOGLE 유저정보를 받아오던 중 예외가 발생했습니다 {}", e.toString());
-			throw e;
+			throw new GoogleAccessTokenException();
 		}
 	}
 

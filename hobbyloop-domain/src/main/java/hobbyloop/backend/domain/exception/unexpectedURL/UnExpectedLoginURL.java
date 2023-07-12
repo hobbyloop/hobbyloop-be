@@ -1,6 +1,5 @@
 package hobbyloop.backend.domain.exception.unexpectedURL;
 
-import hobbyloop.backend.domain.exception.BusinessException;
 import hobbyloop.backend.domain.exception.ExceptionStatus;
 
 public class UnExpectedLoginURL extends UnExpectedURLException {

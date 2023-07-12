@@ -7,11 +7,8 @@ import org.springframework.http.ResponseEntity;
 
 import hobbyloop.backend.domain.exception.token.social.NaverAccessTokenException;
 import hobbyloop.backend.domain.user.SocialType;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 public class NaverLoadStrategy extends SocialLoadStrategy {
-
 	protected Map<String, Object> sendRequestToSocialSite(HttpEntity request) {
 		try {
 			ResponseEntity<Map<String, Object>> response = restTemplate.exchange(SocialType.NAVER.getUserInfoUrl(),//
@@ -20,7 +17,6 @@ public class NaverLoadStrategy extends SocialLoadStrategy {
 				RESPONSE_TYPE);
 			Map<String, Object> responseInfo = (Map<String, Object>)response.getBody().get("response");
 			return responseInfo;
-
 		} catch (Exception e) {
 			throw new NaverAccessTokenException();
 		}

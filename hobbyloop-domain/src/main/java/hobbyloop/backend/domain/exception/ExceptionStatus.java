@@ -30,7 +30,7 @@ public enum ExceptionStatus {
 
 	REFRESH_TOKEN_IS_EXPIRED(HttpStatus.BAD_REQUEST, "Global-007", "리프레시 토큰이 만료됨"),
 
-	REFRESH_TOKEN_NOT_FOUND(HttpStatus.BAD_REQUEST, "Global-008", "엑세스 토큰이 만료됨"),
+	REFRESH_TOKEN_NOT_FOUND(HttpStatus.BAD_REQUEST, "Global-008", "리프레시 토큰을 찾을 수 없음"),
 
 	KAKAO_ACCESS_TOKEN_IS_WRONG(HttpStatus.BAD_REQUEST, "Global-009", "카카오 엑세스 토큰으로 정보를 가져오는중 문제 발생"),
 

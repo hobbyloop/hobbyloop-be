@@ -7,11 +7,8 @@ import org.springframework.http.ResponseEntity;
 
 import hobbyloop.backend.domain.exception.token.social.GoogleAccessTokenException;
 import hobbyloop.backend.domain.user.SocialType;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 public class GoogleLoadStrategy extends SocialLoadStrategy {
-
 	protected Map<String, Object> sendRequestToSocialSite(HttpEntity request) {
 		try {
 			ResponseEntity<Map<String, Object>> response = restTemplate.exchange(SocialType.GOOGLE.getUserInfoUrl(),
